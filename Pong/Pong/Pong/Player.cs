@@ -65,6 +65,7 @@ namespace Pong
         #region Properties
         public int Lives { get { return lives; } set { lives = value; } }
         public Vector2 MovementVector { get { return movementVector; } set { movementVector = value; } }
+        public Rectangle CollisionRectangle { get { return rect; } }
         #endregion
     }
 }
