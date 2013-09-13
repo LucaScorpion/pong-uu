@@ -13,7 +13,7 @@ namespace Pong
         Rectangle rect = new Rectangle();
         Texture2D texture = Assets.DummyTexture;
         Vector2 speed = Vector2.Zero;
-        Color color = Color.White;
+        Color color = Color.Green;
         Random random = new Random();
         int xDir, yDir;
         int minXSpeed = 2;
@@ -40,17 +40,29 @@ namespace Pong
         {
             rect.X += (int)speed.X;
             rect.Y += (int)speed.Y;
-
+            //Collision with top of window
             if (rect.Y < 0)
             {
                 speed.Y = -speed.Y;
                 rect.Y = -rect.Y;
             }
-
+            //Collision with bottom of window
             if (rect.Bottom > g.Viewport.Height)
             {
                 speed.Y = -speed.Y;
                 rect.Y = 2 * g.Viewport.Height - rect.Bottom - rect.Height;
+            }
+            //Collision with left border of window
+            if (rect.X < 0)
+            {
+                speed.X = -speed.X;
+                rect.X = -rect.X;
+            }
+            //Collision with right border of window
+            if (rect.Right > g.Viewport.Width)
+            {
+                speed.X = -speed.X;
+                rect.X = 2 * g.Viewport.Width - rect.Right - rect.Width;
             }
         }
         public void draw(SpriteBatch s)
