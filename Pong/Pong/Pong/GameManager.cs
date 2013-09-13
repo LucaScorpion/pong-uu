@@ -1,0 +1,102 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
+namespace Pong
+{
+    public class GameManager
+    {
+        #region Fields
+        GameState gameState = GameState.StartScreen;
+        Keys startButton = Keys.Space;
+        PlayerManager playerManager = new PlayerManager();
+        #endregion
+
+        #region Methods
+        public void update(GraphicsDevice g)
+        {
+            switch (gameState)
+            {
+                case GameState.StartScreen:
+                    if (InputState.isKeyPressed(startButton))
+                    {
+                        startGame(g);
+
+                    }
+                    break;
+                case GameState.Playing:
+                    playerManager.update();
+                    break;
+                case GameState.GameOver:
+                    break;
+                case GameState.Menu:
+                    break;
+            }
+        }
+        public void draw(SpriteBatch s)
+        {
+            switch (gameState)
+            {
+                case GameState.StartScreen:
+                    drawMenu(s);
+                    break;
+                case GameState.Playing:
+                    s.Begin(); //Basic game spritebatch
+                    playerManager.draw(s);
+                    s.End();
+                    break;
+                case GameState.GameOver:
+                    break;
+                case GameState.Menu:
+                    break;
+            }
+        }
+        public void drawMenu(SpriteBatch s)
+        {
+            s.Begin();
+            //Draw Menu text 
+            String msg = "Press Space to start the game...";
+            s.DrawString(Assets.MenuFont, msg, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(msg).X / 2, s.GraphicsDevice.Viewport.Height / 2 - Assets.MenuFont.MeasureString(msg).Y / 2), Color.Green);
+
+            s.End();
+        }
+        public void startGame(GraphicsDevice g)
+        {
+            playerManager = new PlayerManager();
+
+            //Create players
+            Player p1 = new Player(new Rectangle(0, 0, 20, 100), Color.Green, 10);
+            p1.setControls(Keys.Q, Keys.A);
+            p1.MovementVector = new Vector2(0, 5);
+            playerManager.addPlayer(p1, 1);
+
+            Player p2 = new Player(new Rectangle(g.Viewport.Width - 20, 0, 20, 100), Color.Green, 10);
+            p2.setControls(Keys.O, Keys.L);
+            p2.MovementVector = new Vector2(0, 5);
+            playerManager.addPlayer(p2, 2);
+
+            //Change state to start game
+            gameState = GameState.Playing;
+        }
+        #endregion
+
+        #region Constructors
+        #endregion
+
+        #region Properties
+        #endregion
+
+
+    }
+    public enum GameState
+    {
+        Playing,
+        Menu,
+        GameOver,
+        StartScreen
+    }
+}
