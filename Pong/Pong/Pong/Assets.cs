@@ -17,6 +17,12 @@ namespace Pong
         public static SpriteFont MenuFont;
         public static Texture2D PongBall;
         public static Texture2D Player;
+        public struct Colors
+        {
+            public static Color MainGreen = new Color(0, 255, 0);
+            public static Color FlashyGreen = new Color(10, 255, 10);
+            public static Color LuminantGreen = new Color(30, 255, 30);
+        }
         #endregion
 
         #region Methods

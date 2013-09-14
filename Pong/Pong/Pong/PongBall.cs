@@ -13,7 +13,7 @@ namespace Pong
         Rectangle rect = new Rectangle();
         Texture2D texture = Assets.PongBall;
         Vector2 speed = Vector2.Zero;
-        Color color = Color.Green;
+        Color color = Assets.Colors.FlashyGreen;
         Random random = new Random();
         int xDir, yDir;
         int minXSpeed = 2;
