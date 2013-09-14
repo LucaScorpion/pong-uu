@@ -47,7 +47,11 @@ namespace Pong
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            //Load Assets
             Assets.MenuFont = Content.Load<SpriteFont>("menuFont");
+            Assets.PongBall = Content.Load<Texture2D>("PongBall");
+            Assets.Player = Content.Load<Texture2D>("Player");
 
             // TODO: use this.Content to load your game content here
         }

@@ -13,28 +13,17 @@ namespace Pong
     public static class Assets
     {
         #region Fields
-        static Texture2D dummyTexture;
-        static SpriteFont menuFont;
+        public static Texture2D DummyTexture;
+        public static SpriteFont MenuFont;
+        public static Texture2D PongBall;
+        public static Texture2D Player;
         #endregion
 
         #region Methods
         public static void init(GraphicsDevice g)
         {
-            dummyTexture = new Texture2D(g, 1, 1);
-            dummyTexture.SetData(new Color[] { Color.White });
-        }
-        #endregion
-
-        #region Properties
-        public static Texture2D DummyTexture
-        {
-            get { return dummyTexture; }
-            set { dummyTexture = value; }
-        }
-        public static SpriteFont MenuFont
-        {
-            get { return menuFont; }
-            set { menuFont = value; }
+            DummyTexture = new Texture2D(g, 1, 1);
+            DummyTexture.SetData(new Color[] { Color.White });
         }
         #endregion
     }

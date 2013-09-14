@@ -11,7 +11,7 @@ namespace Pong
     {
         #region Fields
         Rectangle rect = new Rectangle();
-        Texture2D texture = Assets.DummyTexture;
+        Texture2D texture = Assets.PongBall;
         Vector2 speed = Vector2.Zero;
         Color color = Color.Green;
         Random random = new Random();
@@ -40,6 +40,7 @@ namespace Pong
         {
             rect.X += (int)speed.X;
             rect.Y += (int)speed.Y;
+
             //Collision with top of window
             if (rect.Y < 0)
             {

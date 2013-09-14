@@ -13,7 +13,7 @@ namespace Pong
         #region Fields
         Rectangle rect = new Rectangle(0,0,0,0);
         int lives = 0;
-        Texture2D texture = Assets.DummyTexture;
+        Texture2D texture = Assets.Player;
         Color color = Color.White;
         Keys left = Keys.A;
         Keys right = Keys.S;
