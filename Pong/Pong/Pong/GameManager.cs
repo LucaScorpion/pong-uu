@@ -47,13 +47,16 @@ namespace Pong
         }
         public void draw(SpriteBatch s)
         {
-            s.Begin();
+            s.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
             switch (gameState)
             {
                 case GameState.StartScreen:
                     drawMenu(s);
                     break;
                 case GameState.Playing:
+                    //Draw midline
+                    s.Draw(Assets.Midline, new Rectangle(s.GraphicsDevice.Viewport.Width / 2 - Assets.Midline.Width / 2, 0, Assets.Midline.Width, s.GraphicsDevice.Viewport.Height), new Rectangle(0, 0, Assets.Midline.Width, s.GraphicsDevice.Viewport.Height), Assets.Colors.ShadyGreen);
+
                     //Draw players
                     playerManager.draw(s);
 

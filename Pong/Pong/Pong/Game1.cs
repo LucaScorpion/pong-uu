@@ -52,6 +52,7 @@ namespace Pong
             Assets.MenuFont = Content.Load<SpriteFont>("menuFont");
             Assets.PongBall = Content.Load<Texture2D>("PongBall");
             Assets.Player = Content.Load<Texture2D>("Player");
+            Assets.Midline = Content.Load<Texture2D>("Midline");
 
             // TODO: use this.Content to load your game content here
         }
@@ -86,7 +87,7 @@ namespace Pong
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Assets.Colors.DimmGreen);
 
             gameManager.draw(spriteBatch);
             base.Draw(gameTime);
