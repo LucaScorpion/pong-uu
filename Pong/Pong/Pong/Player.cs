@@ -17,12 +17,13 @@ namespace Pong
         Color color = Color.White;
         Keys left = Keys.A;
         Keys right = Keys.S;
-        Vector2 movementVector = new Vector2(3, 0); //Movement direction of 'right' key
+        Vector2 movementVector = Vector2.Zero; //Movement direction of 'right' key
         #endregion
 
         #region Methods
-        public void update()
+        public void update(GraphicsDevice g)
         {
+            //Movement using input
             if (InputState.isKeyDown(left))
             {
                 rect.X -= (int)(movementVector.X);
@@ -32,6 +33,23 @@ namespace Pong
             {
                 rect.X += (int)(movementVector.X);
                 rect.Y += (int)(movementVector.Y);
+            }
+            //Restrict moment to viewport
+            if (rect.Y < 0)
+            {
+                rect.Y = 0;
+            }
+            else if (rect.Bottom > g.Viewport.Height)
+            {
+                rect.Y = g.Viewport.Height - rect.Height;
+            }
+            if (rect.X < 0)
+            {
+                rect.X = 0;
+            }
+            if (rect.Right > g.Viewport.Width)
+            {
+                rect.X = g.Viewport.Width - rect.Width;
             }
         }
         public void draw(SpriteBatch s)

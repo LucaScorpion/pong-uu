@@ -14,11 +14,11 @@ namespace Pong
         #endregion
 
         #region Methods
-        public void update()
+        public void update(GraphicsDevice g)
         {
             foreach (KeyValuePair<int, Player> p in players)
             {
-                p.Value.update();
+                p.Value.update(g);
             }
         }
         public void draw(SpriteBatch s)

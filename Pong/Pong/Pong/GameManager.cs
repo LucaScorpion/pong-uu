@@ -14,6 +14,7 @@ namespace Pong
         GameState gameState = GameState.StartScreen;
         Keys startButton = Keys.Space;
         PlayerManager playerManager = new PlayerManager();
+        List<PongBall> pongBalls = new List<PongBall>();
         #endregion
 
         #region Methods
@@ -29,7 +30,14 @@ namespace Pong
                     }
                     break;
                 case GameState.Playing:
-                    playerManager.update();
+                    //Update playermanager
+                    playerManager.update(g);
+                    
+                    //Update all balls
+                    foreach (PongBall b in pongBalls)
+                    {
+                        b.update(g);
+                    }
                     break;
                 case GameState.GameOver:
                     break;
@@ -39,30 +47,38 @@ namespace Pong
         }
         public void draw(SpriteBatch s)
         {
+            s.Begin();
             switch (gameState)
             {
                 case GameState.StartScreen:
                     drawMenu(s);
                     break;
                 case GameState.Playing:
-                    s.Begin(); //Basic game spritebatch
+                    //Draw players
                     playerManager.draw(s);
-                    s.End();
+
+                    //Draw balls
+                    foreach (PongBall b in pongBalls)
+                    {
+                        b.draw(s);
+                    }
                     break;
                 case GameState.GameOver:
                     break;
                 case GameState.Menu:
                     break;
             }
+            s.End();
         }
         public void drawMenu(SpriteBatch s)
         {
-            s.Begin();
             //Draw Menu text 
             String msg = "Press Space to start the game...";
             s.DrawString(Assets.MenuFont, msg, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(msg).X / 2, s.GraphicsDevice.Viewport.Height / 2 - Assets.MenuFont.MeasureString(msg).Y / 2), Color.Green);
+        }
+        public void drawUI(SpriteBatch s)
+        {
 
-            s.End();
         }
         public void startGame(GraphicsDevice g)
         {
@@ -71,13 +87,18 @@ namespace Pong
             //Create players
             Player p1 = new Player(new Rectangle(0, 0, 20, 100), Color.Green, 10);
             p1.setControls(Keys.Q, Keys.A);
-            p1.MovementVector = new Vector2(0, 5);
+            p1.MovementVector = new Vector2(0, 10);
             playerManager.addPlayer(p1, 1);
 
             Player p2 = new Player(new Rectangle(g.Viewport.Width - 20, 0, 20, 100), Color.Green, 10);
             p2.setControls(Keys.O, Keys.L);
-            p2.MovementVector = new Vector2(0, 5);
+            p2.MovementVector = new Vector2(0, 10);
             playerManager.addPlayer(p2, 2);
+
+            //Spawn a ball
+            PongBall ball = new PongBall(new Rectangle(0,0,10,10),Vector2.Zero);
+            ball.create(g);
+            pongBalls.Add(ball);
 
             //Change state to start game
             gameState = GameState.Playing;

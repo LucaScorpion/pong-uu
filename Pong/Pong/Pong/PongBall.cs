@@ -74,7 +74,7 @@ namespace Pong
         #region Constructors
         public PongBall()
         {
-
+            
         }
         public PongBall(Rectangle rect, Vector2 speed)
         {
