@@ -53,6 +53,7 @@ namespace Pong
             Assets.PongBall = Content.Load<Texture2D>("PongBall");
             Assets.Player = Content.Load<Texture2D>("Player");
             Assets.Midline = Content.Load<Texture2D>("Midline");
+            Assets.Life = Content.Load<Texture2D>("Life");
 
             // TODO: use this.Content to load your game content here
         }

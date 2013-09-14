@@ -18,11 +18,13 @@ namespace Pong
         public static Texture2D PongBall;
         public static Texture2D Player;
         public static Texture2D Midline;
+        public static Texture2D Life;
         public struct Colors
         {
             public static Color MainGreen = new Color(0, 255, 0);
             public static Color FlashyGreen = new Color(10, 255, 10);
             public static Color LuminantGreen = new Color(30, 255, 30);
+            public static Color AccentGreen = new Color(0, 80, 0);
             public static Color ShadyGreen = new Color(0, 50, 0);
             public static Color DimmGreen = new Color(0, 10, 0);
         }

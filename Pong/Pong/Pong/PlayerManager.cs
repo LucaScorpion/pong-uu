@@ -10,28 +10,46 @@ namespace Pong
     public class PlayerManager
     {
         #region Fields
-        Dictionary<int, Player> players = new Dictionary<int, Player>();
+        Player playerOne = new Player();
+        Player playerTwo = new Player();
+
         #endregion
 
         #region Methods
         public void update(GraphicsDevice g)
         {
-            foreach (KeyValuePair<int, Player> p in players)
-            {
-                p.Value.update(g);
-            }
+            //Update players
+            playerOne.update(g);
+            playerTwo.update(g);
         }
         public void draw(SpriteBatch s)
         {
-            foreach (KeyValuePair<int, Player> p in players)
+            //Draw players
+            playerOne.draw(s);
+            playerTwo.draw(s);
+
+            //Draw player One Lives
+            for (int i = 0; i <= playerOne.Lives; i++)
             {
-                //If player is alive, draw it
-                p.Value.draw(s);
+                s.Draw(Assets.Life, new Rectangle(s.GraphicsDevice.Viewport.Width / 2 - Assets.Life.Width - 20, (int)((s.GraphicsDevice.Viewport.Height / 3 - Assets.Life.Height) / 2 + s.GraphicsDevice.Viewport.Height / 3 * i), Assets.Life.Width, Assets.Life.Height), Assets.Colors.AccentGreen);
+            }
+
+            //Draw player Two Lives
+            for (int i = 0; i <= playerTwo.Lives; i++)
+            {
+                s.Draw(Assets.Life, new Rectangle(s.GraphicsDevice.Viewport.Width / 2 + 20, (int)((s.GraphicsDevice.Viewport.Height / 3 - Assets.Life.Height) / 2 + s.GraphicsDevice.Viewport.Height / 3 * i), Assets.Life.Width, Assets.Life.Height), Assets.Colors.AccentGreen);
             }
         }
         public void addPlayer(Player p, int playerIndex)
         {
-            players.Add(playerIndex, p);
+            if (playerIndex == 1)
+            {
+                playerOne = p;
+            }
+            else if (playerIndex == 2)
+            {
+                playerTwo = p;
+            }
         }
         #endregion
 
