@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Pong
 {
@@ -28,6 +29,18 @@ namespace Pong
             public static Color AccentGreen = new Color(0, 80, 0);
             public static Color ShadyGreen = new Color(0, 50, 0);
             public static Color DimmGreen = new Color(0, 10, 0);
+        }
+        public struct Audio
+        {
+            public static SoundEffect Death;
+            public static SoundEffect Hat120;
+            public static SoundEffect Hat140;
+            public static SoundEffect Hat160;
+            public static SoundEffect HitSound;
+            public static SoundEffect Synth120;
+            public static SoundEffect Synth140;
+            public static SoundEffect Synth160;
+            public static SoundEffect Kick;
         }
         #endregion
 
