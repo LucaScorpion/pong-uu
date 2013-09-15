@@ -59,12 +59,10 @@ namespace Pong
 
             //Load Audio
             Assets.Audio.Death = Content.Load<SoundEffect>("Audio/Death");
+            Assets.Audio.Hat = Content.Load<SoundEffect>("Audio/Hat");
             Assets.Audio.Hat120 = Content.Load<SoundEffect>("Audio/Hat120");
             Assets.Audio.Hat140 = Content.Load<SoundEffect>("Audio/Hat140");
             Assets.Audio.Hat160 = Content.Load<SoundEffect>("Audio/Hat160");
-            Assets.Audio.Synth120 = Content.Load<SoundEffect>("Audio/Synth120");
-            Assets.Audio.Synth140 = Content.Load<SoundEffect>("Audio/Synth140");
-            Assets.Audio.Synth160 = Content.Load<SoundEffect>("Audio/Synth160");
             Assets.Audio.Kick = Content.Load<SoundEffect>("Audio/Kick");
             Assets.Audio.HitSound = Content.Load<SoundEffect>("Audio/HitSound");
 

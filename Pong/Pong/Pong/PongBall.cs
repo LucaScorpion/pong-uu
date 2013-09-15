@@ -69,16 +69,6 @@ namespace Pong
             {
                 bounceEmitter.shoot();
             }
-
-            //Check if ball crossed midline
-            if (preciousRect.Center.X > g.Viewport.Width / 2 && rect.Center.X <= g.Viewport.Width / 2 || preciousRect.Center.X < g.Viewport.Width / 2 && rect.Center.X >= g.Viewport.Width / 2)
-            {
-                //Play kick
-                Assets.Audio.Kick.Play();
-
-                //Play hat
-                Assets.Audio.Hat120.Play();
-            }
         }
         public void collideToPlayer(Player player)
         {
@@ -87,7 +77,7 @@ namespace Pong
                 collisionRect.X -= (int)speed.X;
                 if (!collisionRect.Intersects(player.CollisionRectangle))
                 {
-                    
+                    Assets.Audio.HitSound.Play();
                     bounceEmitter.shoot();
 
                     //Put the ball in the right position
@@ -100,14 +90,6 @@ namespace Pong
                         rect.X = player.CollisionRectangle.X + player.CollisionRectangle.Width + player.CollisionRectangle.Right - rect.X;
                     }
                     speed.X = -speed.X;
-
-
-                    //play Hitsound
-                    Assets.Audio.HitSound.Play();
-                    //Play kick if required TODO
-                    Assets.Audio.Kick.Play();
-                    //Play hat
-                    Assets.Audio.Hat120.Play();
                 }
                 else
                 {
