@@ -84,7 +84,7 @@ namespace Pong
         public void drawMenu(SpriteBatch s)
         {
             //Draw Menu text 
-            String msg = "Press Space to start the game...";
+            String msg = "Press " + startButton + " to start the game...";
             s.DrawString(Assets.MenuFont, msg, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(msg).X / 2, s.GraphicsDevice.Viewport.Height / 2 - Assets.MenuFont.MeasureString(msg).Y / 2), Color.Green);
         }
         public void drawUI(SpriteBatch s)
