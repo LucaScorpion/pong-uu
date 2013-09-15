@@ -113,8 +113,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Hat.mp3">
-      <Name>Hat</Name>
+    <Compile Include="Audio\Hat120.mp3">
+      <Name>Hat120</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Hat140.mp3">
+      <Name>Hat140</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Hat160.mp3">
+      <Name>Hat160</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>

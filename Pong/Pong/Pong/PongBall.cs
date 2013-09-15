@@ -75,20 +75,9 @@ namespace Pong
             {
                 //Play kick
                 Assets.Audio.Kick.Play();
-            }
-            else
-            //Check if ball is on left quarterline
-            if (preciousRect.Center.X > g.Viewport.Width / 4 && rect.Center.X <= g.Viewport.Width / 4 || preciousRect.Center.X < g.Viewport.Width / 4 && rect.Center.X >= g.Viewport.Width / 4)
-            {
+
                 //Play hat
-                Assets.Audio.Hat.Play();
-            }
-            else
-            //Check if ball is on right quarterline
-            if (preciousRect.Center.X > g.Viewport.Width * .75 && rect.Center.X <= g.Viewport.Width * .75 || preciousRect.Center.X < g.Viewport.Width * .75 && rect.Center.X >= g.Viewport.Width * .75)
-            {
-                //Play hat
-                Assets.Audio.Hat.Play();
+                Assets.Audio.Hat120.Play();
             }
         }
         public void collideToPlayer(Player player)
@@ -104,6 +93,8 @@ namespace Pong
                     Assets.Audio.HitSound.Play();
                     //Play kick if required TODO
                     Assets.Audio.Kick.Play();
+                    //Play hat
+                    Assets.Audio.Hat120.Play();
                 }
                 else
                 {
