@@ -10,7 +10,7 @@ namespace Pong
     public class PongBall
     {
         #region Fields
-        Rectangle rect = new Rectangle(0,0,10,10);
+        Rectangle rect = new Rectangle(0, 0, 10, 10);
         Texture2D texture = Assets.PongBall;
         Vector2 speed = Vector2.Zero;
         Color color = Assets.Colors.FlashyGreen;
@@ -21,6 +21,7 @@ namespace Pong
         int minYSpeed = 2;
         int maxYSpeed = 4;
         Emitter bounceEmitter = new Emitter(5f,0f,Assets.Colors.ExplodingGreen,Assets.Colors.DimmGreen,20f,3);
+        Rectangle collisionRect = new Rectangle(0, 0, 10, 10);
         #endregion
 
         #region Methods
@@ -43,6 +44,9 @@ namespace Pong
             rect.X += (int)speed.X;
             rect.Y += (int)speed.Y;
 
+            //Move collisionRect
+            collisionRect.X = rect.X;
+            collisionRect.Y = rect.Y;
 
             bool bounced = false; //Boolean to check of ball bounced this loop
 
@@ -72,22 +76,21 @@ namespace Pong
         {
             if (rect.Intersects(player.CollisionRectangle))
             {
-                rect.X -= (int)speed.X;
-                if (!rect.Intersects(player.CollisionRectangle))
+                collisionRect.X -= (int)speed.X;
+                if (!collisionRect.Intersects(player.CollisionRectangle))
                 {
-                    rect.X += (int)speed.X;
                     speed.X = -speed.X;
+                    bounceEmitter.shoot();
                 }
                 else
                 {
-                    rect.Y -= (int)speed.Y;
-                    if (!rect.Intersects(player.CollisionRectangle))
+                    collisionRect.X += (int)speed.X;
+                    collisionRect.Y -= (int)speed.Y;
+                    if (!collisionRect.Intersects(player.CollisionRectangle))
                     {
-                        rect.Y += (int)speed.Y;
                         speed.Y = -speed.Y;
                     }
                 }
-                bounceEmitter.shoot();
             }
         }
         public void draw(SpriteBatch s)
