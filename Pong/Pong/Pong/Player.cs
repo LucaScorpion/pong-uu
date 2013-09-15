@@ -19,19 +19,28 @@ namespace Pong
         Keys up = Keys.W;
         Keys down = Keys.S;
         int movementSpeed = 7;
+        ControlMode controlMode = ControlMode.Player;
         #endregion
 
         #region Methods
         public void update(GraphicsDevice g)
         {
-            //Movement using input
-            if (InputState.isKeyDown(up))
+            if (ControlMode.Player == controlMode)
             {
-                rect.Y -= movementSpeed;
+                //Movement using input
+                if (InputState.isKeyDown(up))
+                {
+                    rect.Y -= movementSpeed;
+                }
+                if (InputState.isKeyDown(down))
+                {
+                    rect.Y += movementSpeed;
+                }
             }
-            if (InputState.isKeyDown(down))
+            else if(ControlMode.Ai == controlMode)
             {
-                rect.Y += movementSpeed;
+
+
             }
             //Restrict moment to viewport
             if (rect.Y < 0)
@@ -84,4 +93,5 @@ namespace Pong
         public Rectangle CollisionRectangle { get { return rect; } }
         #endregion
     }
+    public enum ControlMode { Ai, Player }
 }
