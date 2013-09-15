@@ -38,6 +38,8 @@ namespace Pong
                     {
                         b.update(g);
                     }
+                    //Update particles
+                    ParticleManager.update(g);
                     break;
                 case GameState.GameOver:
                     break;
@@ -47,13 +49,17 @@ namespace Pong
         }
         public void draw(SpriteBatch s)
         {
-            s.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
+            
             switch (gameState)
             {
                 case GameState.StartScreen:
+                    s.Begin();
                     drawMenu(s);
+                    s.End();
                     break;
                 case GameState.Playing:
+                    //Spritebatch for active game
+                    s.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
                     //Draw midline
                     s.Draw(Assets.Midline, new Rectangle(s.GraphicsDevice.Viewport.Width / 2 - Assets.Midline.Width / 2, 0, Assets.Midline.Width, s.GraphicsDevice.Viewport.Height), new Rectangle(0, 0, Assets.Midline.Width, s.GraphicsDevice.Viewport.Height), Assets.Colors.ShadyGreen);
 
@@ -65,13 +71,17 @@ namespace Pong
                     {
                         b.draw(s);
                     }
+                    s.End();
+
+                    //draw particles
+                    ParticleManager.draw(s);
                     break;
                 case GameState.GameOver:
                     break;
                 case GameState.Menu:
                     break;
             }
-            s.End();
+            
         }
         public void drawMenu(SpriteBatch s)
         {
@@ -99,7 +109,7 @@ namespace Pong
             playerManager.addPlayer(p2, 2);
 
             //Spawn a ball
-            PongBall ball = new PongBall(new Rectangle(0,0,10,10),Vector2.Zero);
+            PongBall ball = new PongBall();
             ball.create(g);
             pongBalls.Add(ball);
 

@@ -24,6 +24,7 @@ namespace Pong
             public static Color MainGreen = new Color(0, 255, 0);
             public static Color FlashyGreen = new Color(10, 255, 10);
             public static Color LuminantGreen = new Color(30, 255, 30);
+            public static Color ExplodingGreen = new Color(60, 255, 60);
             public static Color AccentGreen = new Color(0, 80, 0);
             public static Color ShadyGreen = new Color(0, 50, 0);
             public static Color DimmGreen = new Color(0, 10, 0);

@@ -10,7 +10,7 @@ namespace Pong
     public class PongBall
     {
         #region Fields
-        Rectangle rect = new Rectangle();
+        Rectangle rect = new Rectangle(0,0,10,10);
         Texture2D texture = Assets.PongBall;
         Vector2 speed = Vector2.Zero;
         Color color = Assets.Colors.FlashyGreen;
@@ -20,6 +20,7 @@ namespace Pong
         int maxXSpeed = 4;
         int minYSpeed = 2;
         int maxYSpeed = 4;
+        Emitter bounceEmitter = new Emitter(5,0,Assets.Colors.ExplodingGreen,Assets.Colors.DimmGreen,10f,5);
         #endregion
 
         #region Methods
@@ -38,32 +39,47 @@ namespace Pong
         }
         public void update(GraphicsDevice g)
         {
+            //Move ball
             rect.X += (int)speed.X;
             rect.Y += (int)speed.Y;
+
+
+            bool bounced = false; //Boolean to check of ball bounced this loop
 
             //Collision with top of window
             if (rect.Y < 0)
             {
                 speed.Y = -speed.Y;
                 rect.Y = -rect.Y;
+                bounced = true;
             }
             //Collision with bottom of window
             if (rect.Bottom > g.Viewport.Height)
             {
                 speed.Y = -speed.Y;
                 rect.Y = 2 * g.Viewport.Height - rect.Bottom - rect.Height;
+                bounced = true;
             }
             //Collision with left border of window
             if (rect.X < 0)
             {
                 speed.X = -speed.X;
                 rect.X = -rect.X;
+                bounced = true;
             }
             //Collision with right border of window
             if (rect.Right > g.Viewport.Width)
             {
                 speed.X = -speed.X;
                 rect.X = 2 * g.Viewport.Width - rect.Right - rect.Width;
+                bounced = true;
+            }
+            //Drag along emitter
+            bounceEmitter.Position = new Vector2(rect.Center.X, rect.Center.Y);
+            //Spray particles if bounced
+            if (bounced)
+            {
+                bounceEmitter.shoot();
             }
         }
         public void draw(SpriteBatch s)
@@ -75,18 +91,8 @@ namespace Pong
         #region Constructors
         public PongBall()
         {
-            
-        }
-        public PongBall(Rectangle rect, Vector2 speed)
-        {
-            this.rect = rect;
-            this.speed = speed;
-        }
-        public PongBall(Rectangle rect, Vector2 speed, Texture2D texture)
-        {
-            this.texture = texture;
-            this.rect = rect;
-            this.speed = speed;
+            //Add the bounce emitter to the manager for update and draws
+            ParticleManager.addEmitter(bounceEmitter);
         }
         #endregion
 
