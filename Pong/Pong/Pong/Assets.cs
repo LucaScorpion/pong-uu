@@ -36,11 +36,12 @@ namespace Pong
             public static SoundEffectInstance Hat120;
             public static SoundEffectInstance Hat140;
             public static SoundEffectInstance Hat160;
-            public static SoundEffectInstance HitSound;
             public static SoundEffectInstance Synth120;
             public static SoundEffectInstance Synth140;
             public static SoundEffectInstance Synth160;
             public static SoundEffectInstance Kick;
+
+            public static SoundEffect HitSound;
         }
         #endregion
 

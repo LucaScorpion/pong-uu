@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Pong
 {
@@ -18,6 +19,7 @@ namespace Pong
         Keys up = Keys.W;
         Keys down = Keys.S;
         int movementSpeed = 7;
+        SoundEffectInstance hitSound;
         #endregion
 
         #region Methods
@@ -59,6 +61,13 @@ namespace Pong
             this.up = u;
             this.down = d;
         }
+        public void playSound()
+        {
+            if (hitSound != null)
+            {
+                hitSound.Play();
+            }
+        }
         #endregion
 
         #region Constructors
@@ -70,11 +79,12 @@ namespace Pong
             this.rect = rect;
             this.color = color;
         }
-        public Player(Rectangle rect, Color color, int lives)
+        public Player(Rectangle rect, Color color, int lives, SoundEffectInstance hitSound)
         {
             this.rect = rect;
             this.color = color;
             this.lives = lives;
+            this.hitSound = hitSound;
         }
         #endregion
 

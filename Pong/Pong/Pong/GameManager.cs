@@ -96,11 +96,11 @@ namespace Pong
             playerManager = new PlayerManager();
 
             //Create players
-            Player p1 = new Player(new Rectangle(10, g.Viewport.Height / 2 - 50, 20, 100), Assets.Colors.FlashyGreen, 10);
+            Player p1 = new Player(new Rectangle(10, g.Viewport.Height / 2 - 50, 20, 500), Assets.Colors.FlashyGreen, 10, Assets.Audio.HitSound.CreateInstance());
             p1.setControls(Keys.W, Keys.S);
             playerManager.addPlayer(p1, 1);
 
-            Player p2 = new Player(new Rectangle(g.Viewport.Width - 30, g.Viewport.Height / 2 - 50, 20, 100), Assets.Colors.FlashyGreen, 10);
+            Player p2 = new Player(new Rectangle(g.Viewport.Width - 30, g.Viewport.Height / 2 - 50, 20, 500), Assets.Colors.FlashyGreen, 10, Assets.Audio.HitSound.CreateInstance());
             p2.setControls(Keys.Up, Keys.Down);
             playerManager.addPlayer(p2, 2);
 

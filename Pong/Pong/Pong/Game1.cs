@@ -66,7 +66,7 @@ namespace Pong
             Assets.Audio.Synth140 = Content.Load<SoundEffect>("Audio/Synth140").CreateInstance();
             Assets.Audio.Synth160 = Content.Load<SoundEffect>("Audio/Synth160").CreateInstance();
             Assets.Audio.Kick = Content.Load<SoundEffect>("Audio/Kick").CreateInstance();
-            Assets.Audio.HitSound = Content.Load<SoundEffect>("Audio/HitSound").CreateInstance();
+            Assets.Audio.HitSound = Content.Load<SoundEffect>("Audio/HitSound");
 
             // TODO: use this.Content to load your game content here
         }

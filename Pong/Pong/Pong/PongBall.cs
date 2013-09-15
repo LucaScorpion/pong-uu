@@ -31,9 +31,8 @@ namespace Pong
         {
             rect.X = (g.Viewport.Width / 2) - (rect.Width / 2);
             rect.Y = (g.Viewport.Height / 2) - (rect.Height / 2);
-            xDir = random.Next(0, 2) * 2 - 1;
             yDir = random.Next(0, 2) * 2 - 1;
-            speed.X = xDir * xSpeed;
+            speed.X = (random.Next(0,2) * 2 - 1) * (g.Viewport.Width - 60) / 70;
             speed.Y = yDir * ySpeed;
         }
         public void update(GraphicsDevice g)
@@ -79,6 +78,7 @@ namespace Pong
                 {
                     speed.X = -speed.X;
                     bounceEmitter.shoot();
+                    player.playSound();
                 }
                 else
                 {
