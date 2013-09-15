@@ -16,10 +16,8 @@ namespace Pong
         Color color = Assets.Colors.FlashyGreen;
         Random random = new Random();
         int xDir, yDir;
-        int minXSpeed = 2;
-        int maxXSpeed = 4;
-        int minYSpeed = 2;
-        int maxYSpeed = 4;
+        int xSpeed = 3;
+        int ySpeed = 2;
         Emitter bounceEmitter = new Emitter(5f,0f,Assets.Colors.ExplodingGreen,Assets.Colors.DimmGreen,20f,3);
         Rectangle collisionRect = new Rectangle(0, 0, 10, 10);
         #endregion
@@ -35,8 +33,8 @@ namespace Pong
             rect.Y = (g.Viewport.Height / 2) - (rect.Height / 2);
             xDir = random.Next(0, 2) * 2 - 1;
             yDir = random.Next(0, 2) * 2 - 1;
-            speed.X = xDir * random.Next(minXSpeed, maxXSpeed + 1);
-            speed.Y = yDir * random.Next(minYSpeed, maxYSpeed + 1);
+            speed.X = xDir * xSpeed;
+            speed.Y = yDir * ySpeed;
         }
         public void update(GraphicsDevice g)
         {
