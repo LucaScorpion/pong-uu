@@ -10,8 +10,8 @@ namespace Pong
     public class PlayerManager
     {
         #region Fields
-        Player playerOne = new Player();
-        Player playerTwo = new Player();
+        public Player playerOne = new Player();
+        public Player playerTwo = new Player();
 
         #endregion
 

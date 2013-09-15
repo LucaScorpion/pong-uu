@@ -37,6 +37,9 @@ namespace Pong
                     foreach (PongBall b in pongBalls)
                     {
                         b.update(g);
+                        //Collide players to ball
+                        b.collideToPlayer(playerManager.playerOne);
+                        b.collideToPlayer(playerManager.playerTwo);
                     }
                     //Update particles
                     ParticleManager.update(g);
