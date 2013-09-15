@@ -95,7 +95,7 @@ namespace Pong
         }
         public void draw(SpriteBatch s)
         {
-            s.Draw(texture, rect, color);
+                s.Draw(texture, rect, color);
         }
         #endregion
 

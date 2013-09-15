@@ -14,7 +14,7 @@ namespace Pong
         GameState gameState = GameState.StartScreen;
         Keys startButton = Keys.Space;
         PlayerManager playerManager = new PlayerManager();
-        List<PongBall> pongBalls = new List<PongBall>();
+        PongBall pongBall = new PongBall();
         #endregion
 
         #region Methods
@@ -33,14 +33,11 @@ namespace Pong
                     //Update playermanager
                     playerManager.update(g);
                     
-                    //Update all balls
-                    foreach (PongBall b in pongBalls)
-                    {
-                        b.update(g);
-                        //Collide players to ball
-                        b.collideToPlayer(playerManager.playerOne);
-                        b.collideToPlayer(playerManager.playerTwo);
-                    }
+                    pongBall.update(g);
+                    //Collide players to ball
+                    pongBall.collideToPlayer(playerManager.playerOne);
+                    pongBall.collideToPlayer(playerManager.playerTwo);
+
                     //Update particles
                     ParticleManager.update(g);
                     break;
@@ -72,11 +69,8 @@ namespace Pong
                     //Draw players
                     playerManager.draw(s);
 
-                    //Draw balls
-                    foreach (PongBall b in pongBalls)
-                    {
-                        b.draw(s);
-                    }
+                    //Draw ball
+                    pongBall.draw(s);
                     s.End();
 
                     break;
@@ -111,9 +105,8 @@ namespace Pong
             playerManager.addPlayer(p2, 2);
 
             //Spawn a ball
-            PongBall ball = new PongBall();
-            ball.create(g);
-            pongBalls.Add(ball);
+            pongBall = new PongBall();
+            pongBall.create(g);
 
             //Change state to start game
             gameState = GameState.Playing;
