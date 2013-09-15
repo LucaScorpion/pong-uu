@@ -15,8 +15,7 @@ namespace Pong
         Vector2 speed = Vector2.Zero;
         Color color = Assets.Colors.FlashyGreen;
         Random random = new Random();
-        int xDir, yDir;
-        int xSpeed = 3;
+        int yDir;
         int ySpeed = 2;
         Emitter bounceEmitter = new Emitter(5f,0f,Assets.Colors.ExplodingGreen,Assets.Colors.DimmGreen,20f,3);
         Rectangle collisionRect = new Rectangle(0, 0, 10, 10);
@@ -32,11 +31,13 @@ namespace Pong
             rect.X = (g.Viewport.Width / 2) - (rect.Width / 2);
             rect.Y = (g.Viewport.Height / 2) - (rect.Height / 2);
             yDir = random.Next(0, 2) * 2 - 1;
-            speed.X = (random.Next(0,2) * 2 - 1) * (g.Viewport.Width - 60) / 70;
+            speed.X = (random.Next(0,2) * 2 - 1) * (g.Viewport.Width - 60) / 60;
             speed.Y = yDir * ySpeed;
         }
         public void update(GraphicsDevice g)
         {
+            Rectangle preciousRect = rect;
+
             //Move ball
             rect.X += (int)speed.X;
             rect.Y += (int)speed.Y;
@@ -68,6 +69,27 @@ namespace Pong
             {
                 bounceEmitter.shoot();
             }
+
+            //Check if ball crossed midline
+            if (preciousRect.Center.X > g.Viewport.Width / 2 && rect.Center.X <= g.Viewport.Width / 2 || preciousRect.Center.X < g.Viewport.Width / 2 && rect.Center.X >= g.Viewport.Width / 2)
+            {
+                //Play kick
+                Assets.Audio.Kick.Play();
+            }
+            else
+            //Check if ball is on left quarterline
+            if (preciousRect.Center.X > g.Viewport.Width / 4 && rect.Center.X <= g.Viewport.Width / 4 || preciousRect.Center.X < g.Viewport.Width / 4 && rect.Center.X >= g.Viewport.Width / 4)
+            {
+                //Play hat
+                Assets.Audio.Hat.Play();
+            }
+            else
+            //Check if ball is on right quarterline
+            if (preciousRect.Center.X > g.Viewport.Width * .75 && rect.Center.X <= g.Viewport.Width * .75 || preciousRect.Center.X < g.Viewport.Width * .75 && rect.Center.X >= g.Viewport.Width * .75)
+            {
+                //Play hat
+                Assets.Audio.Hat.Play();
+            }
         }
         public void collideToPlayer(Player player)
         {
@@ -78,7 +100,10 @@ namespace Pong
                 {
                     speed.X = -speed.X;
                     bounceEmitter.shoot();
-                    player.playSound();
+                    //play Hitsound
+                    Assets.Audio.HitSound.Play();
+                    //Play kick if required TODO
+                    Assets.Audio.Kick.Play();
                 }
                 else
                 {

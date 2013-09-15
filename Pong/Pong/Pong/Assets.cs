@@ -32,15 +32,12 @@ namespace Pong
         }
         public struct Audio
         {
-            public static SoundEffectInstance Death;
-            public static SoundEffectInstance Hat120;
-            public static SoundEffectInstance Hat140;
-            public static SoundEffectInstance Hat160;
-            public static SoundEffectInstance Synth120;
-            public static SoundEffectInstance Synth140;
-            public static SoundEffectInstance Synth160;
-            public static SoundEffectInstance Kick;
-
+            public static SoundEffect Death;
+            public static SoundEffect Hat;
+            public static SoundEffect Synth120;
+            public static SoundEffect Synth140;
+            public static SoundEffect Synth160;
+            public static SoundEffect Kick;
             public static SoundEffect HitSound;
         }
         #endregion

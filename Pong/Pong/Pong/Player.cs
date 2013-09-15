@@ -19,7 +19,6 @@ namespace Pong
         Keys up = Keys.W;
         Keys down = Keys.S;
         int movementSpeed = 7;
-        SoundEffectInstance hitSound;
         #endregion
 
         #region Methods
@@ -61,13 +60,6 @@ namespace Pong
             this.up = u;
             this.down = d;
         }
-        public void playSound()
-        {
-            if (hitSound != null)
-            {
-                hitSound.Play();
-            }
-        }
         #endregion
 
         #region Constructors
@@ -79,12 +71,11 @@ namespace Pong
             this.rect = rect;
             this.color = color;
         }
-        public Player(Rectangle rect, Color color, int lives, SoundEffectInstance hitSound)
+        public Player(Rectangle rect, Color color, int lives)
         {
             this.rect = rect;
             this.color = color;
             this.lives = lives;
-            this.hitSound = hitSound;
         }
         #endregion
 
