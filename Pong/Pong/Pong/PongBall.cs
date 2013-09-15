@@ -82,6 +82,10 @@ namespace Pong
                 bounceEmitter.shoot();
             }
         }
+        public void collideToPlayer(Player player)
+        {
+
+        }
         public void draw(SpriteBatch s)
         {
             s.Draw(texture, rect, color);
