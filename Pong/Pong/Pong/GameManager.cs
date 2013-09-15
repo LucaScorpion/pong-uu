@@ -29,9 +29,9 @@ namespace Pong
                         gameState = GameState.Menu;
                     }
                     break;
-                case GameState.Multiplayer:
+                case GameState.Playing:
                     //Update playermanager
-                    playerManager.update(g);
+                    playerManager.update(g, pongBall);
                     
                     pongBall.update(g);
                     //Collide players to ball
@@ -65,7 +65,11 @@ namespace Pong
                     {
                         if (mouseState.X > g.Viewport.Width / 2)
                         {
-                            startGame(g);
+                            startGame(GameMode.Multiplayer, g);
+                        }
+                        else
+                        {
+                            startGame(GameMode.Singleplayer, g);
                         }
                     }
                     break;
@@ -81,7 +85,7 @@ namespace Pong
                     drawStartScreen(s);
                     s.End();
                     break;
-                case GameState.Multiplayer:
+                case GameState.Playing:
                     //draw particles
                     ParticleManager.draw(s);
 
@@ -110,9 +114,11 @@ namespace Pong
         }
         public void drawStartScreen(SpriteBatch s)
         {
+            //Draw logo
+            s.Draw(Assets.TitleGraphic, new Rectangle((s.GraphicsDevice.Viewport.Width - Assets.TitleGraphic.Width) / 2, (s.GraphicsDevice.Viewport.Height - Assets.TitleGraphic.Height) / 2 - 100, Assets.TitleGraphic.Width, Assets.TitleGraphic.Height), Color.White);
             //Draw Startscreen text 
             String msg = "Press " + startButton + " to start the game...";
-            s.DrawString(Assets.MenuFont, msg, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(msg).X / 2, s.GraphicsDevice.Viewport.Height / 2 - Assets.MenuFont.MeasureString(msg).Y / 2), Color.Green);
+            s.DrawString(Assets.MenuFont, msg, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(msg).X / 2, s.GraphicsDevice.Viewport.Height / 2 - Assets.MenuFont.MeasureString(msg).Y / 2 + 50), Color.Green);
         }
         public void drawMenu(SpriteBatch s)
         {
@@ -126,25 +132,39 @@ namespace Pong
         {
 
         }
-        public void startGame(GraphicsDevice g)
+        public void startGame(GameMode gameMode, GraphicsDevice g)
         {
             playerManager = new PlayerManager();
 
-            //Create players
-            Player p1 = new Player(new Rectangle(10, g.Viewport.Height / 2 - 50, 20, 100), Assets.Colors.FlashyGreen, 3);
-            p1.setControls(Keys.W, Keys.S);
-            playerManager.addPlayer(p1, 1);
+            if (gameMode == GameMode.Multiplayer)
+            {
+                //Create players
+                Player p1 = new Player(new Rectangle(10, g.Viewport.Height / 2 - 50, 20, 100), Assets.Colors.FlashyGreen, 3);
+                p1.setControls(Keys.W,Keys.S);
+                playerManager.addPlayer(p1, 1);
 
-            Player p2 = new Player(new Rectangle(g.Viewport.Width - 30, g.Viewport.Height / 2 - 50, 20, 100), Assets.Colors.FlashyGreen, 3);
-            p2.setControls(Keys.Up, Keys.Down);
-            playerManager.addPlayer(p2, 2);
+                Player p2 = new Player(new Rectangle(g.Viewport.Width - 30, g.Viewport.Height / 2 - 50, 20, 100), Assets.Colors.FlashyGreen, 3);
+                p2.setControls(Keys.Up, Keys.Down);
+                playerManager.addPlayer(p2, 2);
+            }
+            else if (gameMode == GameMode.Singleplayer)
+            {
+                //Create players
+                Player p1 = new Player(new Rectangle(10, g.Viewport.Height / 2 - 50, 20, 100), Assets.Colors.FlashyGreen, 3);
+                p1.setControls(ControlMode.Ai);
+                playerManager.addPlayer(p1, 1);
+
+                Player p2 = new Player(new Rectangle(g.Viewport.Width - 30, g.Viewport.Height / 2 - 50, 20, 100), Assets.Colors.FlashyGreen, 3);
+                p2.setControls(Keys.Up, Keys.Down);
+                playerManager.addPlayer(p2, 2);
+            }
 
             //Spawn a ball
             pongBall = new PongBall();
             pongBall.create(g);
 
             //Change state to start game
-            gameState = GameState.Multiplayer;
+            gameState = GameState.Playing;
         }
         #endregion
 
@@ -158,9 +178,14 @@ namespace Pong
     }
     public enum GameState
     {
-        Multiplayer,
+        Playing,
         Menu,
         GameOver,
         StartScreen
+    }
+    public enum GameMode
+    {
+        Singleplayer,
+        Multiplayer
     }
 }

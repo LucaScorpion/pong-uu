@@ -16,11 +16,11 @@ namespace Pong
         #endregion
 
         #region Methods
-        public void update(GraphicsDevice g)
+        public void update(GraphicsDevice g, PongBall pongBall)
         {
             //Update players
-            playerOne.update(g);
-            playerTwo.update(g);
+            playerOne.update(g, pongBall);
+            playerTwo.update(g, pongBall);
         }
         public void draw(SpriteBatch s)
         {

@@ -23,7 +23,7 @@ namespace Pong
         #endregion
 
         #region Methods
-        public void update(GraphicsDevice g)
+        public void update(GraphicsDevice g, PongBall pongBall)
         {
             if (ControlMode.Player == controlMode)
             {
@@ -39,8 +39,14 @@ namespace Pong
             }
             else if(ControlMode.Ai == controlMode)
             {
-
-
+                if (pongBall.Position.Y > rect.Center.Y)
+                {
+                    rect.Y += movementSpeed;
+                }
+                if (pongBall.Position.Y < rect.Center.Y)
+                {
+                    rect.Y -= movementSpeed;
+                }
             }
             //Restrict moment to viewport
             if (rect.Y < 0)
@@ -68,6 +74,10 @@ namespace Pong
         {
             this.up = u;
             this.down = d;
+        }
+        public void setControls(ControlMode controlMode)
+        {
+            this.controlMode = controlMode;
         }
         #endregion
 

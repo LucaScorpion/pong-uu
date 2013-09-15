@@ -57,6 +57,7 @@ namespace Pong
             Assets.Player = Content.Load<Texture2D>("Player");
             Assets.Midline = Content.Load<Texture2D>("Midline");
             Assets.Life = Content.Load<Texture2D>("Heart");
+            Assets.TitleGraphic = Content.Load<Texture2D>("Title-Screen");
 
             //Load Audio
             Assets.Audio.Death = Content.Load<SoundEffect>("Audio/Death");

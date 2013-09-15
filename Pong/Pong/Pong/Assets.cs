@@ -20,6 +20,7 @@ namespace Pong
         public static Texture2D Player;
         public static Texture2D Midline;
         public static Texture2D Life;
+        public static Texture2D TitleGraphic;
         public struct Colors
         {
             public static Color MainGreen = new Color(0, 255, 0);
