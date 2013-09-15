@@ -20,7 +20,7 @@ namespace Pong
         int maxXSpeed = 4;
         int minYSpeed = 2;
         int maxYSpeed = 4;
-        Emitter bounceEmitter = new Emitter(5,0,Assets.Colors.ExplodingGreen,Assets.Colors.DimmGreen,10f,5);
+        Emitter bounceEmitter = new Emitter(5f,0f,Assets.Colors.ExplodingGreen,Assets.Colors.DimmGreen,20f,3);
         #endregion
 
         #region Methods

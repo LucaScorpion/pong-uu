@@ -58,6 +58,9 @@ namespace Pong
                     s.End();
                     break;
                 case GameState.Playing:
+                    //draw particles
+                    ParticleManager.draw(s);
+
                     //Spritebatch for active game
                     s.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
                     //Draw midline
@@ -73,8 +76,6 @@ namespace Pong
                     }
                     s.End();
 
-                    //draw particles
-                    ParticleManager.draw(s);
                     break;
                 case GameState.GameOver:
                     break;

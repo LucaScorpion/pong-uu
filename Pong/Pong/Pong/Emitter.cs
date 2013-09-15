@@ -77,7 +77,7 @@ namespace Pong
             for (int a; waitList >= 1; waitList--)
             {
                 //Spawn a particle
-                particles.Add(new Particle(new Vector2(random.Next(0, 2 * spawnSpeed) - spawnSpeed, random.Next(0, 2 * spawnSpeed ) - spawnSpeed), position,beginSize,endSize));
+                particles.Add(new Particle(new Vector2((float)MathHelper.Lerp(-spawnSpeed,spawnSpeed,(float)random.NextDouble()), (float)MathHelper.Lerp(-spawnSpeed,spawnSpeed,(float)random.NextDouble())), position,beginSize,endSize));
             }
         }
         #endregion

@@ -38,14 +38,9 @@ namespace Pong
             if (isAlive)
             {
                 //Draw particle
-                s.Draw(texture, generateRectangle(), Color.Lerp(beginColor, endColor, lifeTime / ttl));
+                float size = MathHelper.Lerp(beginSize, endSize, lifeTime / ttl);
+                s.Draw(texture, new Vector2(position.X - size / 2,position.Y - size / 2), null, Color.Lerp(beginColor, endColor, lifeTime / ttl), 0f, Vector2.Zero, size,SpriteEffects.None,0);
             }
-        }
-        Rectangle generateRectangle()
-        {
-            float size = MathHelper.Lerp(beginSize, endSize, lifeTime / ttl);
-            Rectangle rect = new Rectangle((int)(position.X - size / 2), (int)(position.Y - size / 2), (int)size, (int)size);
-            return rect;
         }
         #endregion
 
