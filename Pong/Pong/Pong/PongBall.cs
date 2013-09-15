@@ -9,7 +9,7 @@ namespace Pong
 {
     public class PongBall
     {
-        #region Fields
+        #region Fields 
         Rectangle rect = new Rectangle(0,0,10,10);
         Texture2D texture = Assets.PongBall;
         Vector2 speed = Vector2.Zero;
