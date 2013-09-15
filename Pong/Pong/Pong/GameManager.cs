@@ -15,6 +15,7 @@ namespace Pong
         Keys startButton = Keys.Space;
         PlayerManager playerManager = new PlayerManager();
         PongBall pongBall = new PongBall();
+        MouseState mouseState;
         #endregion
 
         #region Methods
@@ -25,11 +26,10 @@ namespace Pong
                 case GameState.StartScreen:
                     if (InputState.isKeyPressed(startButton))
                     {
-                        startGame(g);
-
+                        gameState = GameState.Menu;
                     }
                     break;
-                case GameState.Playing:
+                case GameState.Multiplayer:
                     //Update playermanager
                     playerManager.update(g);
                     
@@ -60,6 +60,14 @@ namespace Pong
                 case GameState.GameOver:
                     break;
                 case GameState.Menu:
+                    mouseState = Mouse.GetState();
+                    if (mouseState.LeftButton == ButtonState.Pressed)
+                    {
+                        if (mouseState.X > g.Viewport.Width / 2)
+                        {
+                            gameState = GameState.Multiplayer;
+                        }
+                    }
                     break;
             }
         }
@@ -70,10 +78,10 @@ namespace Pong
             {
                 case GameState.StartScreen:
                     s.Begin();
-                    drawMenu(s);
+                    drawStartScreen(s);
                     s.End();
                     break;
-                case GameState.Playing:
+                case GameState.Multiplayer:
                     //draw particles
                     ParticleManager.draw(s);
 
@@ -93,15 +101,26 @@ namespace Pong
                 case GameState.GameOver:
                     break;
                 case GameState.Menu:
+                    s.Begin();
+                    drawMenu(s);
+                    s.End();
                     break;
             }
             
         }
+        public void drawStartScreen(SpriteBatch s)
+        {
+            //Draw Startscreen text 
+            String msg = "Press " + startButton + " to start the game...";
+            s.DrawString(Assets.MenuFont, msg, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(msg).X / 2, s.GraphicsDevice.Viewport.Height / 2 - Assets.MenuFont.MeasureString(msg).Y / 2), Color.Green);
+        }
         public void drawMenu(SpriteBatch s)
         {
             //Draw Menu text 
-            String msg = "Press " + startButton + " to start the game...";
-            s.DrawString(Assets.MenuFont, msg, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(msg).X / 2, s.GraphicsDevice.Viewport.Height / 2 - Assets.MenuFont.MeasureString(msg).Y / 2), Color.Green);
+            String sp = "1 player";
+            String mp = "2 players";
+            s.DrawString(Assets.MenuFont, sp, new Vector2(s.GraphicsDevice.Viewport.Width / 4 - Assets.MenuFont.MeasureString(sp).X / 2, s.GraphicsDevice.Viewport.Height / 2 - Assets.MenuFont.MeasureString(sp).Y / 2), Color.Green);
+            s.DrawString(Assets.MenuFont, mp, new Vector2(s.GraphicsDevice.Viewport.Width / 4 * 3 - Assets.MenuFont.MeasureString(mp).X / 2, s.GraphicsDevice.Viewport.Height / 2 - Assets.MenuFont.MeasureString(mp).Y / 2), Color.Green);
         }
         public void drawUI(SpriteBatch s)
         {
@@ -125,7 +144,7 @@ namespace Pong
             pongBall.create(g);
 
             //Change state to start game
-            gameState = GameState.Playing;
+            gameState = GameState.Multiplayer;
         }
         #endregion
 
@@ -139,7 +158,7 @@ namespace Pong
     }
     public enum GameState
     {
-        Playing,
+        Multiplayer,
         Menu,
         GameOver,
         StartScreen
