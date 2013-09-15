@@ -65,7 +65,7 @@ namespace Pong
                     {
                         if (mouseState.X > g.Viewport.Width / 2)
                         {
-                            gameState = GameState.Multiplayer;
+                            startGame(g);
                         }
                     }
                     break;
