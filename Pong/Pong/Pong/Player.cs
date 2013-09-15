@@ -15,24 +15,22 @@ namespace Pong
         int lives = 0;
         Texture2D texture = Assets.Player;
         Color color = Color.White;
-        Keys left = Keys.A;
-        Keys right = Keys.S;
-        Vector2 movementVector = Vector2.Zero; //Movement direction of 'right' key
+        Keys up = Keys.W;
+        Keys down = Keys.S;
+        int movementSpeed = 7;
         #endregion
 
         #region Methods
         public void update(GraphicsDevice g)
         {
             //Movement using input
-            if (InputState.isKeyDown(left))
+            if (InputState.isKeyDown(up))
             {
-                rect.X -= (int)(movementVector.X);
-                rect.Y -= (int)(movementVector.Y);
+                rect.Y -= movementSpeed;
             }
-            if (InputState.isKeyDown(right))
+            if (InputState.isKeyDown(down))
             {
-                rect.X += (int)(movementVector.X);
-                rect.Y += (int)(movementVector.Y);
+                rect.Y += movementSpeed;
             }
             //Restrict moment to viewport
             if (rect.Y < 0)
@@ -56,10 +54,10 @@ namespace Pong
         {
             s.Draw(texture, rect, color);
         }
-        public void setControls(Keys l, Keys r)
+        public void setControls(Keys u, Keys d)
         {
-            this.left = l;
-            this.right = r;
+            this.up = u;
+            this.down = d;
         }
         #endregion
 
@@ -82,7 +80,6 @@ namespace Pong
 
         #region Properties
         public int Lives { get { return lives; } set { lives = value; } }
-        public Vector2 MovementVector { get { return movementVector; } set { movementVector = value; } }
         public Rectangle CollisionRectangle { get { return rect; } }
         #endregion
     }

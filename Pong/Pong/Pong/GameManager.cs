@@ -100,13 +100,11 @@ namespace Pong
 
             //Create players
             Player p1 = new Player(new Rectangle(10, g.Viewport.Height / 2 - 50, 20, 100), Assets.Colors.FlashyGreen, 10);
-            p1.setControls(Keys.Q, Keys.A);
-            p1.MovementVector = new Vector2(0, 10);
+            p1.setControls(Keys.W, Keys.S);
             playerManager.addPlayer(p1, 1);
 
             Player p2 = new Player(new Rectangle(g.Viewport.Width - 30, g.Viewport.Height / 2 - 50, 20, 100), Assets.Colors.FlashyGreen, 10);
-            p2.setControls(Keys.O, Keys.L);
-            p2.MovementVector = new Vector2(0, 10);
+            p2.setControls(Keys.Up, Keys.Down);
             playerManager.addPlayer(p2, 2);
 
             //Spawn a ball
