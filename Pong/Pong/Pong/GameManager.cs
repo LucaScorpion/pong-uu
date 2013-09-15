@@ -37,6 +37,22 @@ namespace Pong
                     //Collide players to ball
                     pongBall.collideToPlayer(playerManager.playerOne);
                     pongBall.collideToPlayer(playerManager.playerTwo);
+                    //Kill ball if outside screen
+                    if (pongBall.Position.X > g.Viewport.Width)
+                    {
+                        //Player 2 loses life
+                        playerManager.playerTwo.Lives--;
+                        pongBall.create(g);
+                        Assets.Audio.Death.Play();
+                    }
+                    else if (pongBall.Position.X < 0)
+                    {
+                        //Player 1 loses life
+                        playerManager.playerOne.Lives--;
+                        pongBall.create(g);
+                        Assets.Audio.Death.Play();
+                    }
+
 
                     //Update particles
                     ParticleManager.update(g);
@@ -96,11 +112,11 @@ namespace Pong
             playerManager = new PlayerManager();
 
             //Create players
-            Player p1 = new Player(new Rectangle(10, g.Viewport.Height / 2 - 50, 20, 500), Assets.Colors.FlashyGreen, 10);
+            Player p1 = new Player(new Rectangle(10, g.Viewport.Height / 2 - 50, 20, 100), Assets.Colors.FlashyGreen, 3);
             p1.setControls(Keys.W, Keys.S);
             playerManager.addPlayer(p1, 1);
 
-            Player p2 = new Player(new Rectangle(g.Viewport.Width - 30, g.Viewport.Height / 2 - 50, 20, 500), Assets.Colors.FlashyGreen, 10);
+            Player p2 = new Player(new Rectangle(g.Viewport.Width - 30, g.Viewport.Height / 2 - 50, 20, 100), Assets.Colors.FlashyGreen, 3);
             p2.setControls(Keys.Up, Keys.Down);
             playerManager.addPlayer(p2, 2);
 

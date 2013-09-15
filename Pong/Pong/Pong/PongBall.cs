@@ -19,6 +19,7 @@ namespace Pong
         int ySpeed = 2;
         Emitter bounceEmitter = new Emitter(5f,0f,Assets.Colors.ExplodingGreen,Assets.Colors.DimmGreen,20f,3);
         Rectangle collisionRect = new Rectangle(0, 0, 10, 10);
+        bool paused = true;
         #endregion
 
         #region Methods
@@ -33,41 +34,52 @@ namespace Pong
             yDir = random.Next(0, 2) * 2 - 1;
             speed.X = (random.Next(0,2) * 2 - 1) * (g.Viewport.Width - 60) / 60;
             speed.Y = yDir * ySpeed;
+            paused = true;
         }
         public void update(GraphicsDevice g)
         {
-            Rectangle preciousRect = rect;
-
-            //Move ball
-            rect.X += (int)speed.X;
-            rect.Y += (int)speed.Y;
-
-            //Move collisionRect
-            collisionRect.X = rect.X;
-            collisionRect.Y = rect.Y;
-
-            bool bounced = false; //Boolean to check of ball bounced this loop
-
-            //Collision with top of window
-            if (rect.Y < 0)
+            if (!paused)
             {
-                speed.Y = -speed.Y;
-                rect.Y = -rect.Y;
-                bounced = true;
+                Rectangle preciousRect = rect;
+
+                //Move ball
+                rect.X += (int)speed.X;
+                rect.Y += (int)speed.Y;
+
+                //Move collisionRect
+                collisionRect.X = rect.X;
+                collisionRect.Y = rect.Y;
+
+                bool bounced = false; //Boolean to check of ball bounced this loop
+
+                //Collision with top of window
+                if (rect.Y < 0)
+                {
+                    speed.Y = -speed.Y;
+                    rect.Y = -rect.Y;
+                    bounced = true;
+                }
+                //Collision with bottom of window
+                if (rect.Bottom > g.Viewport.Height)
+                {
+                    speed.Y = -speed.Y;
+                    rect.Y = 2 * g.Viewport.Height - rect.Bottom - rect.Height;
+                    bounced = true;
+                }
+                //Drag along emitter
+                bounceEmitter.Position = new Vector2(rect.Center.X, rect.Center.Y);
+                //Spray particles if bounced
+                if (bounced)
+                {
+                    bounceEmitter.shoot();
+                }
             }
-            //Collision with bottom of window
-            if (rect.Bottom > g.Viewport.Height)
+            else
             {
-                speed.Y = -speed.Y;
-                rect.Y = 2 * g.Viewport.Height - rect.Bottom - rect.Height;
-                bounced = true;
-            }
-            //Drag along emitter
-            bounceEmitter.Position = new Vector2(rect.Center.X, rect.Center.Y);
-            //Spray particles if bounced
-            if (bounced)
-            {
-                bounceEmitter.shoot();
+                if (InputState.isKeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
+                {
+                    paused = false;
+                }
             }
         }
         public void collideToPlayer(Player player)
@@ -104,7 +116,13 @@ namespace Pong
         }
         public void draw(SpriteBatch s)
         {
-                s.Draw(texture, rect, color);
+            s.Draw(texture, rect, color);
+            if (paused)
+            {
+                //Draw the text saying <SPACE>
+                String msg = "<SPACE>";
+                s.DrawString(Assets.MenuFont, msg, new Vector2(rect.X + rect.Width / 2 - Assets.MenuFont.MeasureString(msg).X / 2, rect.Y + rect.Height * 2), Assets.Colors.LuminantGreen);
+            }
         }
         #endregion
 
@@ -117,6 +135,7 @@ namespace Pong
         #endregion
 
         #region Properties
+        public Vector2 Position { get { return new Vector2(rect.Center.X, rect.Center.Y); } }
         #endregion
 
     }
