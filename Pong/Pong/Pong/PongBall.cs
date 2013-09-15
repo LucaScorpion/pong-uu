@@ -87,8 +87,21 @@ namespace Pong
                 collisionRect.X -= (int)speed.X;
                 if (!collisionRect.Intersects(player.CollisionRectangle))
                 {
-                    speed.X = -speed.X;
+                    
                     bounceEmitter.shoot();
+
+                    //Put the ball in the right position
+                    if (speed.X > 0)
+                    {
+                        rect.X = player.CollisionRectangle.X - rect.Width - (rect.Right - player.CollisionRectangle.X);
+                    }
+                    else if(speed.X < 0)
+                    {
+                        rect.X = player.CollisionRectangle.X + player.CollisionRectangle.Width + player.CollisionRectangle.Right - rect.X;
+                    }
+                    speed.X = -speed.X;
+
+
                     //play Hitsound
                     Assets.Audio.HitSound.Play();
                     //Play kick if required TODO
