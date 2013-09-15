@@ -9,7 +9,7 @@ namespace Pong
 {
     public class PongBall
     {
-        #region Fields 
+        #region Fields
         Rectangle rect = new Rectangle(0,0,10,10);
         Texture2D texture = Assets.PongBall;
         Vector2 speed = Vector2.Zero;
@@ -84,7 +84,23 @@ namespace Pong
         }
         public void collideToPlayer(Player player)
         {
-
+            rect.X -= (int)speed.X;
+            if (!rect.Intersects(player.CollisionRectangle))
+            {
+                rect.X += (int)speed.X;
+                speed.X -= speed.X;
+                bounceEmitter.shoot();
+            }
+            else
+            {
+                rect.Y -= (int)speed.Y;
+                if (!rect.Intersects(player.CollisionRectangle))
+                {
+                    rect.Y += (int)speed.Y;
+                    speed.Y -= speed.Y;
+                    bounceEmitter.shoot();
+                }
+            }
         }
         public void draw(SpriteBatch s)
         {
