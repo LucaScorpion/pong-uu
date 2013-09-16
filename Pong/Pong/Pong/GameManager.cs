@@ -16,6 +16,8 @@ namespace Pong
         PlayerManager playerManager = new PlayerManager();
         PongBall pongBall = new PongBall();
         MouseState mouseState;
+        String sp = "1 player";
+        String mp = "2 players";
         #endregion
 
         #region Methods
@@ -53,7 +55,6 @@ namespace Pong
                         Assets.Audio.Death.Play();
                     }
 
-
                     //Update particles
                     ParticleManager.update(g);
                     break;
@@ -63,13 +64,13 @@ namespace Pong
                     mouseState = Mouse.GetState();
                     if (mouseState.LeftButton == ButtonState.Pressed)
                     {
-                        if (mouseState.X > g.Viewport.Width / 2)
-                        {
-                            startGame(GameMode.Multiplayer, g);
-                        }
-                        else
+                        if (mouseState.Y > Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y && mouseState.Y < Assets.TitleGraphic.Height + 4 * Assets.MenuFont.MeasureString(sp).Y)
                         {
                             startGame(GameMode.Singleplayer, g);
+                        }
+                        else if (mouseState.Y > Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y && mouseState.Y < Assets.TitleGraphic.Height + 6 * Assets.MenuFont.MeasureString(mp).Y)
+                        {
+                            startGame(GameMode.Multiplayer, g);
                         }
                     }
                     break;
@@ -122,11 +123,11 @@ namespace Pong
         }
         public void drawMenu(SpriteBatch s)
         {
-            //Draw Menu text 
-            String sp = "1 player";
-            String mp = "2 players";
-            s.DrawString(Assets.MenuFont, sp, new Vector2(s.GraphicsDevice.Viewport.Width / 4 - Assets.MenuFont.MeasureString(sp).X / 2, s.GraphicsDevice.Viewport.Height / 2 - Assets.MenuFont.MeasureString(sp).Y / 2), Color.Green);
-            s.DrawString(Assets.MenuFont, mp, new Vector2(s.GraphicsDevice.Viewport.Width / 4 * 3 - Assets.MenuFont.MeasureString(mp).X / 2, s.GraphicsDevice.Viewport.Height / 2 - Assets.MenuFont.MeasureString(mp).Y / 2), Color.Green);
+            //Draw logo
+            s.Draw(Assets.TitleGraphic, new Rectangle((s.GraphicsDevice.Viewport.Width - Assets.TitleGraphic.Width) / 2, (s.GraphicsDevice.Viewport.Height - Assets.TitleGraphic.Height) / 2 - 100, Assets.TitleGraphic.Width, Assets.TitleGraphic.Height), Color.White);
+            //Draw Menu text
+            s.DrawString(Assets.MenuFont, sp, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(sp).X / 2, Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y), Color.Green);
+            s.DrawString(Assets.MenuFont, mp, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(mp).X / 2, Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y), Color.Green);
         }
         public void drawUI(SpriteBatch s)
         {
