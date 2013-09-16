@@ -15,8 +15,7 @@ namespace Pong
         Vector2 speed = Vector2.Zero;
         Color color = Assets.Colors.FlashyGreen;
         Random random = new Random();
-        int yDir;
-        int ySpeed = 2;
+        float spawnSpeed = 10;
         Emitter bounceEmitter = new Emitter(5f,0f,Assets.Colors.ExplodingGreen,Assets.Colors.DimmGreen,20f,3);
         Rectangle collisionRect = new Rectangle(0, 0, 10, 10);
         bool paused = true;
@@ -31,9 +30,8 @@ namespace Pong
         {
             rect.X = (g.Viewport.Width / 2) - (rect.Width / 2);
             rect.Y = (g.Viewport.Height / 2) - (rect.Height / 2);
-            yDir = random.Next(0, 2) * 2 - 1;
-            speed.X = (random.Next(0,2) * 2 - 1) * (g.Viewport.Width - 60) / 60;
-            speed.Y = yDir * ySpeed;
+            speed = new Vector2(MathHelper.Lerp(0.5f, 1, (float)random.NextDouble()) * (random.Next(0,2) * 2 - 1), MathHelper.Lerp(-1, 1, (float)random.NextDouble()));
+            speed = speed / speed.Length() * spawnSpeed;
             paused = true;
         }
         public void update(GraphicsDevice g)
