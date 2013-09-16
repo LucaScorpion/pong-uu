@@ -86,6 +86,11 @@ namespace Pong
             InputState.update();
 
             gameManager.update(graphics.GraphicsDevice);
+            //Close the game if exit is clicked in the main menu
+            if (gameManager.checkToQuit())
+            {
+                Exit();
+            }
 
             base.Update(gameTime);
         }

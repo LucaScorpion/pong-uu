@@ -18,8 +18,10 @@ namespace Pong
         MouseState mouseState;
         int selected = 0;
         int rectYOffset = 3;
+        bool checkQuitClicked = false;
         String sp = "1 player";
         String mp = "2 players";
+        String quit = "Exit game";
         #endregion
 
         #region Methods
@@ -66,22 +68,30 @@ namespace Pong
                     mouseState = Mouse.GetState();
                     if (mouseState.LeftButton == ButtonState.Pressed)
                     {
-                        if (mouseState.Y > Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - 3 && mouseState.Y < Assets.TitleGraphic.Height + 4 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset)
+                        if (mouseState.Y > Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 4 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset)
                         {
                             startGame(GameMode.Singleplayer, g);
                         }
-                        else if (mouseState.Y > Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y - 3 && mouseState.Y < Assets.TitleGraphic.Height + 6 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset)
+                        else if (mouseState.Y > Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 6 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset)
                         {
                             startGame(GameMode.Multiplayer, g);
                         }
+                        else if (mouseState.Y > Assets.TitleGraphic.Height + 7 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 8 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset)
+                        {
+                            checkQuitClicked = true;
+                        }
                     }
-                    if (mouseState.Y > Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - 3 && mouseState.Y < Assets.TitleGraphic.Height + 4 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset)
+                    if (mouseState.Y > Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 4 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset)
                     {
                         selected = 1;
                     }
-                    else if (mouseState.Y > Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y - 3 && mouseState.Y < Assets.TitleGraphic.Height + 6 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset)
+                    else if (mouseState.Y > Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 6 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset)
                     {
                         selected = 2;
+                    }
+                    else if (mouseState.Y > Assets.TitleGraphic.Height + 7 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 8 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset)
+                    {
+                        selected = 3;
                     }
                     else
                     {
@@ -148,9 +158,14 @@ namespace Pong
             {
                 s.Draw(Assets.DummyTexture, new Rectangle(0, (int)(Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset), s.GraphicsDevice.Viewport.Width, (int)(Assets.MenuFont.MeasureString(mp).Y)), Assets.Colors.ExplodingGreen);
             }
+            else if (selected == 3)
+            {
+                s.Draw(Assets.DummyTexture, new Rectangle(0, (int)(Assets.TitleGraphic.Height + 7 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset), s.GraphicsDevice.Viewport.Width, (int)(Assets.MenuFont.MeasureString(quit).Y)), Assets.Colors.ExplodingGreen);
+            }
             //Draw Menu text
             s.DrawString(Assets.MenuFont, sp, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(sp).X / 2, Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y), Color.Green);
             s.DrawString(Assets.MenuFont, mp, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(mp).X / 2, Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y), Color.Green);
+            s.DrawString(Assets.MenuFont, quit, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(quit).X / 2, Assets.TitleGraphic.Height + 7 * Assets.MenuFont.MeasureString(quit).Y), Color.Green);
         }
         public void drawUI(SpriteBatch s)
         {
@@ -189,6 +204,17 @@ namespace Pong
 
             //Change state to start game
             gameState = GameState.Playing;
+        }
+        public bool checkToQuit()
+        {
+            if (checkQuitClicked == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         #endregion
 
