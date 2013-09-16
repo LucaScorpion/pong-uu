@@ -16,6 +16,8 @@ namespace Pong
         PlayerManager playerManager = new PlayerManager();
         PongBall pongBall = new PongBall();
         MouseState mouseState;
+        int selected = 0;
+        int rectYOffset = 3;
         String sp = "1 player";
         String mp = "2 players";
         #endregion
@@ -64,14 +66,26 @@ namespace Pong
                     mouseState = Mouse.GetState();
                     if (mouseState.LeftButton == ButtonState.Pressed)
                     {
-                        if (mouseState.Y > Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y && mouseState.Y < Assets.TitleGraphic.Height + 4 * Assets.MenuFont.MeasureString(sp).Y)
+                        if (mouseState.Y > Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - 3 && mouseState.Y < Assets.TitleGraphic.Height + 4 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset)
                         {
                             startGame(GameMode.Singleplayer, g);
                         }
-                        else if (mouseState.Y > Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y && mouseState.Y < Assets.TitleGraphic.Height + 6 * Assets.MenuFont.MeasureString(mp).Y)
+                        else if (mouseState.Y > Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y - 3 && mouseState.Y < Assets.TitleGraphic.Height + 6 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset)
                         {
                             startGame(GameMode.Multiplayer, g);
                         }
+                    }
+                    if (mouseState.Y > Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - 3 && mouseState.Y < Assets.TitleGraphic.Height + 4 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset)
+                    {
+                        selected = 1;
+                    }
+                    else if (mouseState.Y > Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y - 3 && mouseState.Y < Assets.TitleGraphic.Height + 6 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset)
+                    {
+                        selected = 2;
+                    }
+                    else
+                    {
+                        selected = 0;
                     }
                     break;
             }
@@ -125,6 +139,15 @@ namespace Pong
         {
             //Draw logo
             s.Draw(Assets.TitleGraphic, new Rectangle((s.GraphicsDevice.Viewport.Width - Assets.TitleGraphic.Width) / 2, (s.GraphicsDevice.Viewport.Height - Assets.TitleGraphic.Height) / 2 - 100, Assets.TitleGraphic.Width, Assets.TitleGraphic.Height), Color.White);
+            //Draw rectangle around selected text
+            if (selected == 1)
+            {
+                s.Draw(Assets.DummyTexture, new Rectangle(0, (int)(Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset), s.GraphicsDevice.Viewport.Width, (int)(Assets.MenuFont.MeasureString(sp).Y)), Assets.Colors.ExplodingGreen);
+            }
+            else if (selected == 2)
+            {
+                s.Draw(Assets.DummyTexture, new Rectangle(0, (int)(Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset), s.GraphicsDevice.Viewport.Width, (int)(Assets.MenuFont.MeasureString(mp).Y)), Assets.Colors.ExplodingGreen);
+            }
             //Draw Menu text
             s.DrawString(Assets.MenuFont, sp, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(sp).X / 2, Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y), Color.Green);
             s.DrawString(Assets.MenuFont, mp, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(mp).X / 2, Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y), Color.Green);
