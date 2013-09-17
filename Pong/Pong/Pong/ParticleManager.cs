@@ -22,7 +22,7 @@ namespace Pong
             //Update all emitters
             foreach (Emitter emitter in emitters)
             {
-                emitter.update(g);
+                emitter.update();
             }
         }
         /// <summary>
