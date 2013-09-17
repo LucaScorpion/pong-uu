@@ -8,6 +8,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Pong
 {
+    /// <summary>
+    /// This class is the main manager of the game. It handles gamestate, gamemode and calls the actions to the game.
+    /// </summary>
     public class GameManager
     {
         #region Fields
@@ -30,25 +33,34 @@ namespace Pong
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Update the game manager.
+        /// This method has to be called every loop. It updates a part of the game after determining the gamestate.
+        /// </summary>
+        /// <param name="g">GraphicsDevice used for screen size calculations.</param>
         public void update(GraphicsDevice g)
         {
+            //Check what the gamestate is.
             switch (gameState)
             {
-                case GameState.StartScreen:
+                case GameState.StartScreen: //The game is on the startscreen. Not in the menu yet.
                     if (InputState.isKeyPressed(startButton))
                     {
+                        //If the startbutton is pressed, the game will move on to the menu.
                         gameState = GameState.Menu;
                     }
                     break;
-                case GameState.Playing:
+                case GameState.Playing: //The game is playing. All game logic is done here. 
                     //Update playermanager
                     playerManager.update(g, pongBall);
-                    
+                    //Update the ball
                     pongBall.update(g);
+
                     //Collide players to ball
                     pongBall.collideToPlayer(playerManager.playerOne);
                     pongBall.collideToPlayer(playerManager.playerTwo);
-                    //Kill ball if outside screen
+
+                    //Kill ball if outside screen (point scored)
                     if (pongBall.Position.X > g.Viewport.Width)
                     {
                         //Player 2 loses life
@@ -81,6 +93,7 @@ namespace Pong
                         gameState = GameState.Playing;
                     }
 
+                    //Get mouseState
                     mouseState = Mouse.GetState();
                     //Highlight text when hovering over it
                     if (mouseState.Y > g.Viewport.Height / 3 + 2 * Assets.MenuFont.MeasureString(pausedContinue).Y - rectYOffset && mouseState.Y < g.Viewport.Height / 3 + 3 * Assets.MenuFont.MeasureString(pausedContinue).Y - rectYOffset)

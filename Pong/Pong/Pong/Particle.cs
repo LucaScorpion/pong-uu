@@ -25,7 +25,7 @@ namespace Pong
         #endregion
 
         #region Methods
-        public void update(GraphicsDevice g)
+        public void update()
         {
             //Change Lifetime
             lifeTime++;

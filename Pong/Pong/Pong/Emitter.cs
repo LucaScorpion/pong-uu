@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Pong
 {
     /// <summary>
-    /// Emitter of particles
+    /// Emitter of particles. When an instance of this class is made, it will automatically be drawn by the pariclemanager. (Of ParticleManager.draw is called)
     /// </summary>
     public class Emitter
     {
@@ -27,18 +27,24 @@ namespace Pong
         #endregion
 
         #region Methods
-        public void update(GraphicsDevice g)
+        /// <summary>
+        /// Update Emitter. (Updates all particles sent out by the emitter)
+        /// </summary>
+        public void update()
         {
+            //If the emitter isn't paused, it will call the shoot method.
             if (!paused)
             {
                 shoot();
             }
+
+            //Loop through all particles. Kill if the particle isn't alive, otherwise update the particle.
             for(int i = particles.Count() - 1; i >= 0; i--)
             {
                 //Update all particles that are alive.
                 if (particles[i].isAlive)
                 {
-                    particles[i].update(g);
+                    particles[i].update();
                 }
                 else
                 {
@@ -47,33 +53,40 @@ namespace Pong
                 }
             }
         }
+        /// <summary>
+        /// Draw all particles on the screen.
+        /// </summary>
+        /// <param name="s">Opened Spritebatch. (Commonly opened by the ParticleManager)</param>
         public void draw(SpriteBatch s)
         {
+            //Draw EVERY particle
             foreach (Particle particle in particles)
             {
                 particle.draw(s);
             }
         }
         /// <summary>
-        /// Start spawning particles
+        /// Start spawning particles every update.
         /// </summary>
         public void start()
         {
             paused = false;
         }
         /// <summary>
-        /// Pause spawning particles
+        /// Pause spawning particles.
         /// </summary>
         public void pause()
         {
             paused = true;
         }
         /// <summary>
-        /// Spawn a single loop of particles
+        /// Spawn a single batch of particles. (if paused == false then shoot is called every update)
         /// </summary>
         public void shoot()
         {
             waitList += particlesPerLoop; //Add new particles to waitlist
+
+            //Spawn particles and empty waitlist
             for (int a; waitList >= 1; waitList--)
             {
                 //Spawn a particle
@@ -83,6 +96,15 @@ namespace Pong
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Emitter of particles
+        /// </summary>
+        /// <param name="beginSize">Size of particle on spawn</param>
+        /// <param name="endSize">Size of particle on dreath (lerp)</param>
+        /// <param name="beginColor">Color of particle on spawn</param>
+        /// <param name="endColor">Color of particle on death (fade)</param>
+        /// <param name="particlesPerLoop">Amount of particles spawned per loop. (Every time shoot() is called)</param>
+        /// <param name="spawnSpeed">Maximum speed of the particle on spawn. (MAXIMUM)</param>
         public Emitter(float beginSize, float endSize, Color beginColor, Color endColor, float particlesPerLoop, int spawnSpeed)
         {
             this.beginColor = beginColor;
@@ -91,6 +113,8 @@ namespace Pong
             this.endSize = endSize;
             this.spawnSpeed = spawnSpeed;
             this.particlesPerLoop = particlesPerLoop;
+
+            ParticleManager.addEmitter(this);
         }
         #endregion
 

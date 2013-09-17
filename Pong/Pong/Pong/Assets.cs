@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Audio;
 namespace Pong
 {
     /// <summary>
-    /// This static class contains several commonly used assets.
+    /// This static class contains several commonly used assets like sounds, textures and fonts.
     /// </summary>
     public static class Assets
     {

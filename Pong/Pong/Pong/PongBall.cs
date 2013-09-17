@@ -131,8 +131,6 @@ namespace Pong
         #region Constructors
         public PongBall()
         {
-            //Add the bounce emitter to the manager for update and draws
-            ParticleManager.addEmitter(bounceEmitter);
         }
         #endregion
 
