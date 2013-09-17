@@ -17,13 +17,16 @@ namespace Pong
         PlayerManager playerManager = new PlayerManager();
         PongBall pongBall = new PongBall();
         MouseState mouseState;
-        int selected = 0;
+        int menuSelected = 0;
+        int pauseSelected = 0;
         int rectYOffset = 3;
         bool checkQuitClicked = false;
         String sp = "1 player";
         String mp = "2 players";
         String quit = "Exit game";
         String paused = "Game paused";
+        String pausedContinue = "Continue";
+        String toMenu = "Back to main menu";
         #endregion
 
         #region Methods
@@ -71,15 +74,62 @@ namespace Pong
                     }
                     break;
                 case GameState.Paused:
+                    //Unpause game
                     if (InputState.isKeyPressed(pauseButton))
                     {
                         gameState = GameState.Playing;
+                    }
+
+                    mouseState = Mouse.GetState();
+                    //Highlight text when hovering over it
+                    if (mouseState.Y > g.Viewport.Height / 3 + 2 * Assets.MenuFont.MeasureString(pausedContinue).Y - rectYOffset && mouseState.Y < g.Viewport.Height / 3 + 3 * Assets.MenuFont.MeasureString(pausedContinue).Y - rectYOffset)
+                    {
+                        pauseSelected = 1;
+                    }
+                    else if (mouseState.Y > g.Viewport.Height / 3 + 4 * Assets.MenuFont.MeasureString(toMenu).Y - rectYOffset && mouseState.Y < g.Viewport.Height / 3 + 5 * Assets.MenuFont.MeasureString(toMenu).Y - rectYOffset)
+                    {
+                        pauseSelected = 2;
+                    }
+                    else
+                    {
+                        pauseSelected = 0;
+                    }
+                    //Check for clicking
+                    if (mouseState.LeftButton == ButtonState.Pressed)
+                    {
+                        if (mouseState.Y > g.Viewport.Height / 3 + 2 * Assets.MenuFont.MeasureString(pausedContinue).Y - rectYOffset && mouseState.Y < g.Viewport.Height / 3 + 3 * Assets.MenuFont.MeasureString(pausedContinue).Y - rectYOffset)
+                        {
+                            gameState = GameState.Playing;
+                        }
+                        else if (mouseState.Y > g.Viewport.Height / 3 + 4 * Assets.MenuFont.MeasureString(toMenu).Y - rectYOffset && mouseState.Y < g.Viewport.Height / 3 + 5 * Assets.MenuFont.MeasureString(toMenu).Y - rectYOffset)
+                        {
+                            gameState = GameState.Menu;
+                        }
+                        pauseSelected = 0;
                     }
                     break;
                 case GameState.GameOver:
                     break;
                 case GameState.Menu:
                     mouseState = Mouse.GetState();
+                    //Highlight text when hovering over it
+                    if (mouseState.Y > Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 4 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset)
+                    {
+                        menuSelected = 1;
+                    }
+                    else if (mouseState.Y > Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 6 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset)
+                    {
+                        menuSelected = 2;
+                    }
+                    else if (mouseState.Y > Assets.TitleGraphic.Height + 7 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 8 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset)
+                    {
+                        menuSelected = 3;
+                    }
+                    else
+                    {
+                        menuSelected = 0;
+                    }
+                    //Check for clicking
                     if (mouseState.LeftButton == ButtonState.Pressed)
                     {
                         if (mouseState.Y > Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 4 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset)
@@ -94,23 +144,7 @@ namespace Pong
                         {
                             checkQuitClicked = true;
                         }
-                    }
-                    //Highlight text when hovering over it
-                    if (mouseState.Y > Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 4 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset)
-                    {
-                        selected = 1;
-                    }
-                    else if (mouseState.Y > Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 6 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset)
-                    {
-                        selected = 2;
-                    }
-                    else if (mouseState.Y > Assets.TitleGraphic.Height + 7 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 8 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset)
-                    {
-                        selected = 3;
-                    }
-                    else
-                    {
-                        selected = 0;
+                        menuSelected = 0;
                     }
                     break;
             }
@@ -169,16 +203,16 @@ namespace Pong
         {
             //Draw logo
             s.Draw(Assets.TitleGraphic, new Rectangle((s.GraphicsDevice.Viewport.Width - Assets.TitleGraphic.Width) / 2, (s.GraphicsDevice.Viewport.Height - Assets.TitleGraphic.Height) / 2 - 100, Assets.TitleGraphic.Width, Assets.TitleGraphic.Height), Color.White);
-            //Draw rectangle around selected text
-            if (selected == 1)
+            //Highlight selected text
+            if (menuSelected == 1)
             {
                 s.Draw(Assets.DummyTexture, new Rectangle(0, (int)(Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset), s.GraphicsDevice.Viewport.Width, (int)(Assets.MenuFont.MeasureString(sp).Y)), Assets.Colors.ExplodingGreen);
             }
-            else if (selected == 2)
+            else if (menuSelected == 2)
             {
                 s.Draw(Assets.DummyTexture, new Rectangle(0, (int)(Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset), s.GraphicsDevice.Viewport.Width, (int)(Assets.MenuFont.MeasureString(mp).Y)), Assets.Colors.ExplodingGreen);
             }
-            else if (selected == 3)
+            else if (menuSelected == 3)
             {
                 s.Draw(Assets.DummyTexture, new Rectangle(0, (int)(Assets.TitleGraphic.Height + 7 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset), s.GraphicsDevice.Viewport.Width, (int)(Assets.MenuFont.MeasureString(quit).Y)), Assets.Colors.ExplodingGreen);
             }
@@ -190,7 +224,19 @@ namespace Pong
         public void drawPauseMenu(SpriteBatch s)
         {
             //Draw paused text
-            s.DrawString(Assets.MenuFont, paused, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(paused).X / 2, s.GraphicsDevice.Viewport.Height / 3), Color.Green);
+            s.DrawString(Assets.MenuFont, paused, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(paused).X / 2, s.GraphicsDevice.Viewport.Height / 3), Assets.Colors.FlashyGreen);
+            //Highlight selected text
+            if (pauseSelected == 1)
+            {
+                s.Draw(Assets.DummyTexture, new Rectangle(0, (int)(s.GraphicsDevice.Viewport.Height / 3 + 2 * Assets.MenuFont.MeasureString(pausedContinue).Y - rectYOffset), s.GraphicsDevice.Viewport.Width, (int)(Assets.MenuFont.MeasureString(pausedContinue).Y)), Assets.Colors.ExplodingGreen);
+            }
+            else if (pauseSelected == 2)
+            {
+                s.Draw(Assets.DummyTexture, new Rectangle(0, (int)(s.GraphicsDevice.Viewport.Height / 3 + 4 * Assets.MenuFont.MeasureString(toMenu).Y - rectYOffset), s.GraphicsDevice.Viewport.Width, (int)(Assets.MenuFont.MeasureString(toMenu).Y)), Assets.Colors.ExplodingGreen);
+            }
+            //Draw pause menu text
+            s.DrawString(Assets.MenuFont, pausedContinue, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(pausedContinue).X / 2, s.GraphicsDevice.Viewport.Height / 3 + 2 * Assets.MenuFont.MeasureString(pausedContinue).Y), Color.Green);
+            s.DrawString(Assets.MenuFont, toMenu, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(toMenu).X / 2, s.GraphicsDevice.Viewport.Height / 3 + 4 * Assets.MenuFont.MeasureString(toMenu).Y), Color.Green);
         }
         public void drawUI(SpriteBatch s)
         {
