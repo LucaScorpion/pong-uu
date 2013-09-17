@@ -13,6 +13,7 @@ namespace Pong
         #region Fields
         GameState gameState = GameState.StartScreen;
         Keys startButton = Keys.Space;
+        Keys pauseButton = Keys.Escape;
         PlayerManager playerManager = new PlayerManager();
         PongBall pongBall = new PongBall();
         MouseState mouseState;
@@ -22,6 +23,7 @@ namespace Pong
         String sp = "1 player";
         String mp = "2 players";
         String quit = "Exit game";
+        String paused = "Game paused";
         #endregion
 
         #region Methods
@@ -61,6 +63,18 @@ namespace Pong
 
                     //Update particles
                     ParticleManager.update(g);
+
+                    //Pause game
+                    if (InputState.isKeyPressed(pauseButton))
+                    {
+                        gameState = GameState.Paused;
+                    }
+                    break;
+                case GameState.Paused:
+                    if (InputState.isKeyPressed(pauseButton))
+                    {
+                        gameState = GameState.Playing;
+                    }
                     break;
                 case GameState.GameOver:
                     break;
@@ -81,6 +95,7 @@ namespace Pong
                             checkQuitClicked = true;
                         }
                     }
+                    //Highlight text when hovering over it
                     if (mouseState.Y > Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 4 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset)
                     {
                         selected = 1;
@@ -111,7 +126,7 @@ namespace Pong
                     s.End();
                     break;
                 case GameState.Playing:
-                    //draw particles
+                    //Draw particles
                     ParticleManager.draw(s);
 
                     //Spritebatch for active game
@@ -126,6 +141,11 @@ namespace Pong
                     pongBall.draw(s);
                     s.End();
 
+                    break;
+                case GameState.Paused:
+                    s.Begin();
+                    drawPauseMenu(s);
+                    s.End();
                     break;
                 case GameState.GameOver:
                     break;
@@ -166,6 +186,11 @@ namespace Pong
             s.DrawString(Assets.MenuFont, sp, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(sp).X / 2, Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y), Color.Green);
             s.DrawString(Assets.MenuFont, mp, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(mp).X / 2, Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y), Color.Green);
             s.DrawString(Assets.MenuFont, quit, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(quit).X / 2, Assets.TitleGraphic.Height + 7 * Assets.MenuFont.MeasureString(quit).Y), Color.Green);
+        }
+        public void drawPauseMenu(SpriteBatch s)
+        {
+            //Draw paused text
+            s.DrawString(Assets.MenuFont, paused, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(paused).X / 2, s.GraphicsDevice.Viewport.Height / 3), Color.Green);
         }
         public void drawUI(SpriteBatch s)
         {
@@ -229,6 +254,7 @@ namespace Pong
     public enum GameState
     {
         Playing,
+        Paused,
         Menu,
         GameOver,
         StartScreen
