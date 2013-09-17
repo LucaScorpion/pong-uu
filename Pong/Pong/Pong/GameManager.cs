@@ -71,6 +71,7 @@ namespace Pong
                     if (InputState.isKeyPressed(pauseButton))
                     {
                         gameState = GameState.Paused;
+                        pongBall.pause();
                     }
                     break;
                 case GameState.Paused:

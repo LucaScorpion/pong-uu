@@ -122,6 +122,10 @@ namespace Pong
                 s.DrawString(Assets.MenuFont, msg, new Vector2(rect.X + rect.Width / 2 - Assets.MenuFont.MeasureString(msg).X / 2, rect.Y + rect.Height * 2), Assets.Colors.LuminantGreen);
             }
         }
+        public void pause()
+        {
+            paused = true;
+        }
         #endregion
 
         #region Constructors
