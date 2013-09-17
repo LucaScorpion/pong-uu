@@ -18,9 +18,12 @@ namespace Pong
         #region Methods
         public void update(GraphicsDevice g, PongBall pongBall)
         {
-            //Update players
-            playerOne.update(g, pongBall);
-            playerTwo.update(g, pongBall);
+            //Update players if ball is not paused
+            if (!pongBall.IsPaused)
+            {
+                playerOne.update(g, pongBall);
+                playerTwo.update(g, pongBall);
+            }
         }
         public void draw(SpriteBatch s)
         {
