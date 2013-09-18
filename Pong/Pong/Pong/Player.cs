@@ -20,6 +20,7 @@ namespace Pong
         Keys down = Keys.S;
         int movementSpeed = 7;
         ControlMode controlMode = ControlMode.Player;
+        int moveDireciton = 0; //1 = up, -1 = down, 0 = no movement
         #endregion
 
         #region Methods
@@ -27,14 +28,24 @@ namespace Pong
         {
             if (ControlMode.Player == controlMode)
             {
-                //Movement using input
+                //Movement using input and adjust moveDirection for the curveball
+                moveDireciton = 0;
                 if (InputState.isKeyDown(up))
                 {
                     rect.Y -= movementSpeed;
+                    moveDireciton = 1; //Is moving up
                 }
                 if (InputState.isKeyDown(down))
                 {
                     rect.Y += movementSpeed;
+                    if(moveDireciton == 1)
+                    {
+                        moveDireciton = 0; //is NOT moving, the up and down keys are both pressed
+                    }
+                    else
+                    {
+                        moveDireciton = -1; //Moving down.
+                    }
                 }
             }
             else if(ControlMode.Ai == controlMode)
@@ -101,6 +112,7 @@ namespace Pong
         #region Properties
         public int Lives { get { return lives; } set { lives = value; } }
         public Rectangle CollisionRectangle { get { return rect; } }
+        public int MoveDirection { get { return moveDireciton; } set { moveDireciton = value; } }
         #endregion
     }
     public enum ControlMode { Ai, Player }

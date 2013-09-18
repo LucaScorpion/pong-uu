@@ -17,8 +17,11 @@ namespace Pong
         Random random = new Random();
         float spawnSpeed = 10;
         Emitter bounceEmitter = new Emitter(5f,0f,Assets.Colors.ExplodingGreen,Assets.Colors.DimmGreen,20f,3);
+        Emitter curveEmitter = new Emitter(5f, 0f, Assets.Colors.ExplodingGreen, Assets.Colors.DimmGreen, 3f, 1);
         Rectangle collisionRect = new Rectangle(0, 0, 10, 10);
+        float curve =  0.1f; //Amount of curve when curveball is hit
         bool paused = true;
+        int curveDirection = 0; //Direction from player for the curveball
         #endregion
 
         #region Methods
@@ -39,6 +42,10 @@ namespace Pong
             if (!paused)
             {
                 Rectangle preciousRect = rect;
+
+                //Curve speed;
+                 Vector2 newSpeed = new Vector2(speed.X, speed.Y + curveDirection * curve); //New direction, but needs speed (vector length) correction;
+                 speed = newSpeed / newSpeed.Length() * speed.Length();
 
                 //Move ball
                 rect.X += (int)speed.X;
@@ -64,12 +71,17 @@ namespace Pong
                     rect.Y = 2 * g.Viewport.Height - rect.Bottom - rect.Height;
                     bounced = true;
                 }
-                //Drag along emitter
+                //Drag along emitters
                 bounceEmitter.Position = new Vector2(rect.Center.X, rect.Center.Y);
+                curveEmitter.Position = new Vector2(rect.Center.X, rect.Center.Y);
                 //Spray particles if bounced
                 if (bounced)
                 {
                     bounceEmitter.shoot();
+                }
+                if (curveDirection != 0)
+                {
+                    curveEmitter.shoot();
                 }
             }
             else
@@ -100,6 +112,7 @@ namespace Pong
                         rect.X = player.CollisionRectangle.X + player.CollisionRectangle.Width + player.CollisionRectangle.Right - rect.X;
                     }
                     speed.X = -speed.X;
+                    curveDirection = player.MoveDirection;
                 }
                 else
                 {
