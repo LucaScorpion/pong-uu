@@ -54,6 +54,12 @@ namespace Pong
                 playerTwo = p;
             }
         }
+
+        public void reset(GraphicsDevice g)
+        {
+            playerOne.reset(g);
+            playerTwo.reset(g);
+        }
         #endregion
 
         #region Constructors

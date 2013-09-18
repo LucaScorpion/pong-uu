@@ -90,6 +90,10 @@ namespace Pong
         {
             this.controlMode = controlMode;
         }
+        public void reset(GraphicsDevice g)
+        {
+            rect.Y = (int)(g.Viewport.Height - rect.Height)/2;
+        }
         #endregion
 
         #region Constructors

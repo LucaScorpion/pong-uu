@@ -67,6 +67,9 @@ namespace Pong
                         playerManager.playerTwo.Lives--;
                         pongBall.create(g);
                         Assets.Audio.Death.Play();
+
+                        //Reset players
+                        playerManager.reset(g);
                     }
                     else if (pongBall.Position.X < 0)
                     {
@@ -74,6 +77,8 @@ namespace Pong
                         playerManager.playerOne.Lives--;
                         pongBall.create(g);
                         Assets.Audio.Death.Play();
+                        //Reset players
+                        playerManager.reset(g);
                     }
 
                     //Update particles
