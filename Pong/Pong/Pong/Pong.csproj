@@ -115,11 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets.cs" />
-    <Compile Include="Emitter.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="InputState.cs" />
-    <Compile Include="Particle.cs" />
-    <Compile Include="ParticleManager.cs" />
+    <Compile Include="ParticleSystem.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerManager.cs" />
     <Compile Include="PongBall.cs" />
