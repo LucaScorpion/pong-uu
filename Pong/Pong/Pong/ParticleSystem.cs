@@ -50,6 +50,9 @@ namespace Pong
         #region Properties
         #endregion
     }
+    /// <summary>
+    /// Emitter of particles
+    /// </summary>
     public class Emitter
     {
         #region Fields
@@ -213,4 +216,43 @@ namespace Pong
         public bool isAlive { get { if (ttl > lifeTime) { return true; } else { return false; } } }
         #endregion
     }
+    #region SpawnShape
+    abstract class SpawnShape
+    {
+        #region Fields
+        abstract public Vector2 origin;
+        abstract public float height;
+        abstract public float width;
+        abstract public Random random;
+        #endregion
+
+        #region Methods
+        abstract public Vector2 GetPosition();
+        #endregion
+
+        #region Constructors
+        public SpawnShape(Vector2 origin, float width, float height)
+        {
+            this.origin = origin;
+            this.width = width;
+            this.height = height;
+            this.random = new Random();
+        }
+        #endregion
+    }
+    class PointSpawnShape : SpawnShape
+    {
+        public override Vector2 GetPosition()
+        {
+            return origin;
+        }
+    }
+    class CircleSpawnShape : SpawnShape
+    {
+        public override Vector2 GetPosition()
+        {
+            return new Vector2((float)(origin.X + Math.Sin(random.NextDouble() * Math.PI) * width), (float)(origin.Y + Math.Sin(random.NextDouble() * Math.PI) * height));
+        }
+    }
+    #endregion
 }
