@@ -118,6 +118,10 @@ namespace Pong
                     {
                         curveDirection = player.MoveDirection;
                     }
+                    else
+                    {
+                        curveDirection = 0;
+                    }
                 }
                 else
                 {
