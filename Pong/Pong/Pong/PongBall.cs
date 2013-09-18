@@ -36,6 +36,7 @@ namespace Pong
             speed = new Vector2(MathHelper.Lerp(0.5f, 1, (float)random.NextDouble()) * (random.Next(0,2) * 2 - 1), MathHelper.Lerp(-1, 1, (float)random.NextDouble()));
             speed = speed / speed.Length() * spawnSpeed;
             paused = true;
+            curveDirection = 0;
         }
         public void update(GraphicsDevice g)
         {
