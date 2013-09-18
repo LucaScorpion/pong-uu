@@ -113,7 +113,11 @@ namespace Pong
                         rect.X = player.CollisionRectangle.X + player.CollisionRectangle.Width + player.CollisionRectangle.Right - rect.X;
                     }
                     speed.X = -speed.X;
-                    curveDirection = player.MoveDirection;
+                    //Curve effect when playerdirection is opposite of ball direction
+                    if ((speed.Y >= 0 && player.MoveDirection == 1) || (speed.Y <= 0 && player.MoveDirection == -1))
+                    {
+                        curveDirection = player.MoveDirection;
+                    }
                 }
                 else
                 {

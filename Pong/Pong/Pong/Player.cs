@@ -20,7 +20,7 @@ namespace Pong
         Keys down = Keys.S;
         int movementSpeed = 7;
         ControlMode controlMode = ControlMode.Player;
-        int moveDireciton = 0; //1 = up, -1 = down, 0 = no movement
+        int moveDirection = 0; //1 = up, -1 = down, 0 = no movement
         #endregion
 
         #region Methods
@@ -29,22 +29,22 @@ namespace Pong
             if (ControlMode.Player == controlMode)
             {
                 //Movement using input and adjust moveDirection for the curveball
-                moveDireciton = 0;
+                moveDirection = 0;
                 if (InputState.isKeyDown(up))
                 {
                     rect.Y -= movementSpeed;
-                    moveDireciton = 1; //Is moving up
+                    moveDirection = 1; //Is moving up
                 }
                 if (InputState.isKeyDown(down))
                 {
                     rect.Y += movementSpeed;
-                    if(moveDireciton == 1)
+                    if(moveDirection == 1)
                     {
-                        moveDireciton = 0; //is NOT moving, the up and down keys are both pressed
+                        moveDirection = 0; //is NOT moving, the up and down keys are both pressed
                     }
                     else
                     {
-                        moveDireciton = -1; //Moving down.
+                        moveDirection = -1; //Moving down.
                     }
                 }
             }
@@ -63,18 +63,12 @@ namespace Pong
             if (rect.Y < 0)
             {
                 rect.Y = 0;
+                moveDirection = 0;
             }
             else if (rect.Bottom > g.Viewport.Height)
             {
                 rect.Y = g.Viewport.Height - rect.Height;
-            }
-            if (rect.X < 0)
-            {
-                rect.X = 0;
-            }
-            if (rect.Right > g.Viewport.Width)
-            {
-                rect.X = g.Viewport.Width - rect.Width;
+                moveDirection = 0;
             }
         }
         public void draw(SpriteBatch s)
@@ -116,7 +110,7 @@ namespace Pong
         #region Properties
         public int Lives { get { return lives; } set { lives = value; } }
         public Rectangle CollisionRectangle { get { return rect; } }
-        public int MoveDirection { get { return moveDireciton; } set { moveDireciton = value; } }
+        public int MoveDirection { get { return moveDirection; } set { moveDirection = value; } }
         #endregion
     }
     public enum ControlMode { Ai, Player }
