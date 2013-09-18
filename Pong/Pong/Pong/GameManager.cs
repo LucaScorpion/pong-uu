@@ -306,6 +306,7 @@ namespace Pong
             //Change state to start game
             gameState = GameState.Playing;
         }
+        //Exit game
         public bool checkToQuit()
         {
             if (checkQuitClicked == true)

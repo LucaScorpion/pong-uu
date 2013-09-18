@@ -50,6 +50,7 @@ namespace Pong
             }
             else if(ControlMode.Ai == controlMode)
             {
+                //Move towards the ball
                 if (pongBall.Position.Y > rect.Center.Y)
                 {
                     rect.Y += movementSpeed;
@@ -59,7 +60,7 @@ namespace Pong
                     rect.Y -= movementSpeed;
                 }
             }
-            //Restrict moment to viewport
+            //Restrict movement to viewport
             if (rect.Y < 0)
             {
                 rect.Y = 0;
@@ -78,15 +79,18 @@ namespace Pong
                 s.Draw(texture, rect, color);
             }
         }
+        //Set the controls
         public void setControls(Keys u, Keys d)
         {
             this.up = u;
             this.down = d;
         }
+        //AI or human player
         public void setControls(ControlMode controlMode)
         {
             this.controlMode = controlMode;
         }
+        //Reset the paddle to its starting position
         public void reset(GraphicsDevice g)
         {
             rect.Y = (int)(g.Viewport.Height - rect.Height)/2;

@@ -31,10 +31,13 @@ namespace Pong
         }
         public void create(GraphicsDevice g)
         {
+            //Put the ball in the middle of the screen
             rect.X = (g.Viewport.Width / 2) - (rect.Width / 2);
             rect.Y = (g.Viewport.Height / 2) - (rect.Height / 2);
+            //Set a random speed
             speed = new Vector2(MathHelper.Lerp(0.5f, 1, (float)random.NextDouble()) * (random.Next(0,2) * 2 - 1), MathHelper.Lerp(-1, 1, (float)random.NextDouble()));
             speed = speed / speed.Length() * spawnSpeed;
+            //Press space to start (unpause)
             paused = true;
             curveDirection = 0;
         }
@@ -42,8 +45,6 @@ namespace Pong
         {
             if (!paused)
             {
-                Rectangle preciousRect = rect;
-
                 //Curve speed
                  Vector2 newSpeed = new Vector2(speed.X, speed.Y + curveDirection * curve); //New direction, but needs speed (vector length) correction;
                  speed = newSpeed / newSpeed.Length() * speed.Length();
@@ -87,6 +88,7 @@ namespace Pong
             }
             else
             {
+                //Press space to start (unpause)
                 if (InputState.isKeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
                 {
                     paused = false;

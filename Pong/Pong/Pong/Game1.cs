@@ -62,13 +62,10 @@ namespace Pong
             //Load Audio
             Assets.Audio.Death = Content.Load<SoundEffect>("Audio/Death");
             Assets.Audio.HitSound = Content.Load<SoundEffect>("Audio/HitSound");
-
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
+        /// UnloadContent will be called once per game and is the place to unload all content
         /// </summary>
         protected override void UnloadContent()
         {
@@ -102,7 +99,6 @@ namespace Pong
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Assets.Colors.DimmGreen);
-
             gameManager.draw(spriteBatch);
             base.Draw(gameTime);
         }
