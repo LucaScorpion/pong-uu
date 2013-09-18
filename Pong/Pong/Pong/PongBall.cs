@@ -43,7 +43,7 @@ namespace Pong
             {
                 Rectangle preciousRect = rect;
 
-                //Curve speed;
+                //Curve speed
                  Vector2 newSpeed = new Vector2(speed.X, speed.Y + curveDirection * curve); //New direction, but needs speed (vector length) correction;
                  speed = newSpeed / newSpeed.Length() * speed.Length();
 
