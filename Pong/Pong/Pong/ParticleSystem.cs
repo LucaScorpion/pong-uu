@@ -220,39 +220,39 @@ namespace Pong
     abstract class SpawnShape
     {
         #region Fields
-        abstract public Vector2 origin;
-        abstract public float height;
-        abstract public float width;
-        abstract public Random random;
         #endregion
 
         #region Methods
-        abstract public Vector2 GetPosition();
+        abstract public Vector2 GetPosition(Vector2 origin);
         #endregion
 
         #region Constructors
-        public SpawnShape(Vector2 origin, float width, float height)
+        public SpawnShape()
         {
-            this.origin = origin;
-            this.width = width;
-            this.height = height;
-            this.random = new Random();
         }
         #endregion
     }
-    class PointSpawnShape : SpawnShape
+    class SpawnShapeCircle : SpawnShape
     {
-        public override Vector2 GetPosition()
-        {
-            return origin;
-        }
-    }
-    class CircleSpawnShape : SpawnShape
-    {
-        public override Vector2 GetPosition()
+        #region Fields
+        Random random = new Random();
+        float width, height = 0;
+        #endregion
+
+        #region Methods
+        public override Vector2 GetPosition(Vector2 origin)
         {
             return new Vector2((float)(origin.X + Math.Sin(random.NextDouble() * Math.PI) * width), (float)(origin.Y + Math.Sin(random.NextDouble() * Math.PI) * height));
         }
+        #endregion
+
+        #region Constructors
+        public SpawnShapeCircle(float width, float height)
+        {
+            this.width = width;
+            this.height = height;
+        }
+        #endregion
     }
     #endregion
 }
