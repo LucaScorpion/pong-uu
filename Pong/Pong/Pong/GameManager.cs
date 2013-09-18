@@ -19,7 +19,6 @@ namespace Pong
         Keys pauseButton = Keys.Escape;
         PlayerManager playerManager = new PlayerManager();
         PongBall pongBall = new PongBall();
-        MouseState mouseState;
         int menuSelected = 0;
         int pauseSelected = 0;
         int rectYOffset = 3;
@@ -97,15 +96,12 @@ namespace Pong
                     {
                         gameState = GameState.Playing;
                     }
-
-                    //Get mouseState
-                    mouseState = Mouse.GetState();
                     //Highlight text when hovering over it
-                    if (mouseState.Y > g.Viewport.Height / 3 + 2 * Assets.MenuFont.MeasureString(pausedContinue).Y - rectYOffset && mouseState.Y < g.Viewport.Height / 3 + 3 * Assets.MenuFont.MeasureString(pausedContinue).Y - rectYOffset)
+                    if (InputState.currentMouse.Y > g.Viewport.Height / 3 + 2 * Assets.MenuFont.MeasureString(pausedContinue).Y - rectYOffset && InputState.currentMouse.Y < g.Viewport.Height / 3 + 3 * Assets.MenuFont.MeasureString(pausedContinue).Y - rectYOffset)
                     {
                         pauseSelected = 1;
                     }
-                    else if (mouseState.Y > g.Viewport.Height / 3 + 4 * Assets.MenuFont.MeasureString(toMenu).Y - rectYOffset && mouseState.Y < g.Viewport.Height / 3 + 5 * Assets.MenuFont.MeasureString(toMenu).Y - rectYOffset)
+                    else if (InputState.currentMouse.Y > g.Viewport.Height / 3 + 4 * Assets.MenuFont.MeasureString(toMenu).Y - rectYOffset && InputState.currentMouse.Y < g.Viewport.Height / 3 + 5 * Assets.MenuFont.MeasureString(toMenu).Y - rectYOffset)
                     {
                         pauseSelected = 2;
                     }
@@ -114,13 +110,13 @@ namespace Pong
                         pauseSelected = 0;
                     }
                     //Check for clicking
-                    if (mouseState.LeftButton == ButtonState.Pressed)
+                    if (InputState.leftClick())
                     {
-                        if (mouseState.Y > g.Viewport.Height / 3 + 2 * Assets.MenuFont.MeasureString(pausedContinue).Y - rectYOffset && mouseState.Y < g.Viewport.Height / 3 + 3 * Assets.MenuFont.MeasureString(pausedContinue).Y - rectYOffset)
+                        if (InputState.currentMouse.Y > g.Viewport.Height / 3 + 2 * Assets.MenuFont.MeasureString(pausedContinue).Y - rectYOffset && InputState.currentMouse.Y < g.Viewport.Height / 3 + 3 * Assets.MenuFont.MeasureString(pausedContinue).Y - rectYOffset)
                         {
                             gameState = GameState.Playing;
                         }
-                        else if (mouseState.Y > g.Viewport.Height / 3 + 4 * Assets.MenuFont.MeasureString(toMenu).Y - rectYOffset && mouseState.Y < g.Viewport.Height / 3 + 5 * Assets.MenuFont.MeasureString(toMenu).Y - rectYOffset)
+                        else if (InputState.currentMouse.Y > g.Viewport.Height / 3 + 4 * Assets.MenuFont.MeasureString(toMenu).Y - rectYOffset && InputState.currentMouse.Y < g.Viewport.Height / 3 + 5 * Assets.MenuFont.MeasureString(toMenu).Y - rectYOffset)
                         {
                             gameState = GameState.Menu;
                         }
@@ -130,17 +126,16 @@ namespace Pong
                 case GameState.GameOver:
                     break;
                 case GameState.Menu:
-                    mouseState = Mouse.GetState();
                     //Highlight text when hovering over it
-                    if (mouseState.Y > Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 4 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset)
+                    if (InputState.currentMouse.Y > Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset && InputState.currentMouse.Y < Assets.TitleGraphic.Height + 4 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset)
                     {
                         menuSelected = 1;
                     }
-                    else if (mouseState.Y > Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 6 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset)
+                    else if (InputState.currentMouse.Y > Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset && InputState.currentMouse.Y < Assets.TitleGraphic.Height + 6 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset)
                     {
                         menuSelected = 2;
                     }
-                    else if (mouseState.Y > Assets.TitleGraphic.Height + 7 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 8 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset)
+                    else if (InputState.currentMouse.Y > Assets.TitleGraphic.Height + 7 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset && InputState.currentMouse.Y < Assets.TitleGraphic.Height + 8 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset)
                     {
                         menuSelected = 3;
                     }
@@ -149,17 +144,17 @@ namespace Pong
                         menuSelected = 0;
                     }
                     //Check for clicking
-                    if (mouseState.LeftButton == ButtonState.Pressed)
+                    if (InputState.leftClick())
                     {
-                        if (mouseState.Y > Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 4 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset)
+                        if (InputState.currentMouse.Y > Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset && InputState.currentMouse.Y < Assets.TitleGraphic.Height + 4 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset)
                         {
                             startGame(GameMode.Singleplayer, g);
                         }
-                        else if (mouseState.Y > Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 6 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset)
+                        else if (InputState.currentMouse.Y > Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset && InputState.currentMouse.Y < Assets.TitleGraphic.Height + 6 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset)
                         {
                             startGame(GameMode.Multiplayer, g);
                         }
-                        else if (mouseState.Y > Assets.TitleGraphic.Height + 7 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset && mouseState.Y < Assets.TitleGraphic.Height + 8 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset)
+                        else if (InputState.currentMouse.Y > Assets.TitleGraphic.Height + 7 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset && InputState.currentMouse.Y < Assets.TitleGraphic.Height + 8 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset)
                         {
                             checkQuitClicked = true;
                         }
