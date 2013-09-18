@@ -135,15 +135,15 @@ namespace Pong
                     break;
                 case GameState.Menu:
                     //Highlight text when hovering over it
-                    if (InputState.currentMouse.Y > Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset && InputState.currentMouse.Y < Assets.TitleGraphic.Height + 4 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset)
+                    if (InputState.currentMouse.Y > g.Viewport.Height / 2 + 50 && InputState.currentMouse.Y < g.Viewport.Height / 2 + 80)
                     {
                         menuSelected = 1;
                     }
-                    else if (InputState.currentMouse.Y > Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset && InputState.currentMouse.Y < Assets.TitleGraphic.Height + 6 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset)
+                    else if (InputState.currentMouse.Y > g.Viewport.Height / 2 + 80 && InputState.currentMouse.Y < g.Viewport.Height / 2 + 110)
                     {
                         menuSelected = 2;
                     }
-                    else if (InputState.currentMouse.Y > Assets.TitleGraphic.Height + 7 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset && InputState.currentMouse.Y < Assets.TitleGraphic.Height + 8 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset)
+                    else if (InputState.currentMouse.Y > g.Viewport.Height / 2 + 110 && InputState.currentMouse.Y < g.Viewport.Height / 2 + 140)
                     {
                         menuSelected = 3;
                     }
@@ -154,15 +154,15 @@ namespace Pong
                     //Check for clicking
                     if (InputState.leftClick())
                     {
-                        if (InputState.currentMouse.Y > Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset && InputState.currentMouse.Y < Assets.TitleGraphic.Height + 4 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset)
+                        if (menuSelected == 1)
                         {
                             startGame(GameMode.Singleplayer, g);
                         }
-                        else if (InputState.currentMouse.Y > Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset && InputState.currentMouse.Y < Assets.TitleGraphic.Height + 6 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset)
+                        else if (menuSelected == 2)
                         {
                             startGame(GameMode.Multiplayer, g);
                         }
-                        else if (InputState.currentMouse.Y > Assets.TitleGraphic.Height + 7 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset && InputState.currentMouse.Y < Assets.TitleGraphic.Height + 8 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset)
+                        else if (menuSelected == 3)
                         {
                             checkQuitClicked = true;
                         }
@@ -224,32 +224,32 @@ namespace Pong
         public void drawStartScreen(SpriteBatch s)
         {
             //Draw logo
-            s.Draw(Assets.TitleGraphic, new Rectangle((s.GraphicsDevice.Viewport.Width - Assets.TitleGraphic.Width) / 2, (s.GraphicsDevice.Viewport.Height - Assets.TitleGraphic.Height) / 2 - 100, Assets.TitleGraphic.Width, Assets.TitleGraphic.Height), Color.White);
+            s.Draw(Assets.TitleGraphic, new Rectangle(s.GraphicsDevice.Viewport.Width / 2 - Assets.TitleGraphic.Width / 2, s.GraphicsDevice.Viewport.Height / 2 - Assets.TitleGraphic.Height / 2, Assets.TitleGraphic.Width, Assets.TitleGraphic.Height), Color.White);
             //Draw Startscreen text 
             String msg = "Press " + startButton + " to start the game...";
-            s.DrawString(Assets.MenuFont, msg, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(msg).X / 2, s.GraphicsDevice.Viewport.Height / 2 - Assets.MenuFont.MeasureString(msg).Y / 2 + 50), Color.Green);
+            s.DrawString(Assets.MenuFont, msg, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - 350, s.GraphicsDevice.Viewport.Height / 2 + 50), Assets.Colors.LuminantGreen);
         }
         public void drawMenu(SpriteBatch s)
         {
             //Draw logo
-            s.Draw(Assets.TitleGraphic, new Rectangle((s.GraphicsDevice.Viewport.Width - Assets.TitleGraphic.Width) / 2, (s.GraphicsDevice.Viewport.Height - Assets.TitleGraphic.Height) / 2 - 100, Assets.TitleGraphic.Width, Assets.TitleGraphic.Height), Color.White);
+            s.Draw(Assets.TitleGraphic, new Rectangle(s.GraphicsDevice.Viewport.Width / 2 - Assets.TitleGraphic.Width / 2, s.GraphicsDevice.Viewport.Height / 2 - Assets.TitleGraphic.Height / 2, Assets.TitleGraphic.Width, Assets.TitleGraphic.Height), Color.White);
             //Highlight selected text
             if (menuSelected == 1)
             {
-                s.Draw(Assets.DummyTexture, new Rectangle(0, (int)(Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y - rectYOffset), s.GraphicsDevice.Viewport.Width, (int)(Assets.MenuFont.MeasureString(sp).Y)), Assets.Colors.ExplodingGreen);
+                s.Draw(Assets.DummyTexture, new Rectangle(s.GraphicsDevice.Viewport.Width / 2 - 350 - rectYOffset, s.GraphicsDevice.Viewport.Height / 2 + 50 - rectYOffset, 380, (int)(Assets.MenuFont.MeasureString(sp).Y + rectYOffset)), Assets.Colors.ShadyGreen);
             }
             else if (menuSelected == 2)
             {
-                s.Draw(Assets.DummyTexture, new Rectangle(0, (int)(Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y - rectYOffset), s.GraphicsDevice.Viewport.Width, (int)(Assets.MenuFont.MeasureString(mp).Y)), Assets.Colors.ExplodingGreen);
+                s.Draw(Assets.DummyTexture, new Rectangle(s.GraphicsDevice.Viewport.Width / 2 - 350 - rectYOffset, s.GraphicsDevice.Viewport.Height / 2 + 80 - rectYOffset, 380, (int)(Assets.MenuFont.MeasureString(sp).Y + rectYOffset)), Assets.Colors.ShadyGreen);
             }
             else if (menuSelected == 3)
             {
-                s.Draw(Assets.DummyTexture, new Rectangle(0, (int)(Assets.TitleGraphic.Height + 7 * Assets.MenuFont.MeasureString(quit).Y - rectYOffset), s.GraphicsDevice.Viewport.Width, (int)(Assets.MenuFont.MeasureString(quit).Y)), Assets.Colors.ExplodingGreen);
+                s.Draw(Assets.DummyTexture, new Rectangle(s.GraphicsDevice.Viewport.Width / 2 - 350 - rectYOffset, s.GraphicsDevice.Viewport.Height / 2 + 110 - rectYOffset, 380, (int)(Assets.MenuFont.MeasureString(sp).Y + rectYOffset)), Assets.Colors.ShadyGreen);
             }
             //Draw Menu text
-            s.DrawString(Assets.MenuFont, sp, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(sp).X / 2, Assets.TitleGraphic.Height + 3 * Assets.MenuFont.MeasureString(sp).Y), Color.Green);
-            s.DrawString(Assets.MenuFont, mp, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(mp).X / 2, Assets.TitleGraphic.Height + 5 * Assets.MenuFont.MeasureString(mp).Y), Color.Green);
-            s.DrawString(Assets.MenuFont, quit, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(quit).X / 2, Assets.TitleGraphic.Height + 7 * Assets.MenuFont.MeasureString(quit).Y), Color.Green);
+            s.DrawString(Assets.MenuFont, sp, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - 350, s.GraphicsDevice.Viewport.Height / 2  + 50), Assets.Colors.LuminantGreen);
+            s.DrawString(Assets.MenuFont, mp, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - 350, s.GraphicsDevice.Viewport.Height / 2 + 80), Assets.Colors.LuminantGreen);
+            s.DrawString(Assets.MenuFont, quit, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - 350, s.GraphicsDevice.Viewport.Height / 2 + 110), Assets.Colors.LuminantGreen);
         }
         public void drawPauseMenu(SpriteBatch s)
         {
