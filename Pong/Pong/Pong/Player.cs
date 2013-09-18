@@ -73,7 +73,10 @@ namespace Pong
         }
         public void draw(SpriteBatch s)
         {
-            s.Draw(texture, rect, color);
+            if (lives > 0)
+            {
+                s.Draw(texture, rect, color);
+            }
         }
         public void setControls(Keys u, Keys d)
         {

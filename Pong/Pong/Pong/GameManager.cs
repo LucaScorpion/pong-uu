@@ -89,6 +89,13 @@ namespace Pong
                         gameState = GameState.Paused;
                         pongBall.pause();
                     }
+                    //Game Over when a player is dead
+                    if (playerManager.playerTwo.Lives <= 0 || playerManager.playerOne.Lives <= 0)
+                    {
+                        gameState = GameState.GameOver;
+                        //Kill ball
+                        pongBall = null;
+                    }
                     break;
                 case GameState.Paused:
                     //Unpause game
@@ -124,6 +131,7 @@ namespace Pong
                     }
                     break;
                 case GameState.GameOver:
+
                     break;
                 case GameState.Menu:
                     //Highlight text when hovering over it
@@ -173,10 +181,10 @@ namespace Pong
                     drawStartScreen(s);
                     s.End();
                     break;
-                case GameState.Playing:
-                    //Draw particles
-                    ParticleManager.draw(s);
 
+                    //If playing or game over
+                case GameState.GameOver:
+                case GameState.Playing:
                     //Spritebatch for active game
                     s.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
                     //Draw midline
@@ -185,17 +193,25 @@ namespace Pong
                     //Draw players
                     playerManager.draw(s);
 
-                    //Draw ball
-                    pongBall.draw(s);
-                    s.End();
+                    //Game over logic
+                    if (gameState == GameState.GameOver)
+                    {
 
+                    }
+                    else
+                    {
+                        //Draw ball if game is not over
+                        pongBall.draw(s);
+                        //Draw particles if not game over
+                        ParticleManager.draw(s);
+                    }
+                    
+                    s.End();
                     break;
                 case GameState.Paused:
                     s.Begin();
                     drawPauseMenu(s);
                     s.End();
-                    break;
-                case GameState.GameOver:
                     break;
                 case GameState.Menu:
                     s.Begin();

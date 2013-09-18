@@ -31,13 +31,11 @@ namespace Pong
         /// <param name="s">SpriteBatch. WARNING! DO NOT send in an open spriteBatch. Make sure it has been ended</param>
         public static void draw(SpriteBatch s)
         {
-            s.Begin();
             //Draw all emitters
             foreach (Emitter emitter in emitters)
             {
                 emitter.draw(s);
             }
-            s.End();
         }
         public static void addEmitter(Emitter emitter)
         {
