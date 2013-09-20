@@ -156,11 +156,15 @@ namespace Pong
                     {
                         if (menuSelected == 1)
                         {
+                            //Start a singleplayer game, clear stats
                             startGame(GameMode.Singleplayer, g);
+                            Stats.clearStats();
                         }
                         else if (menuSelected == 2)
                         {
+                            //Start a multiplayer game, clear stats
                             startGame(GameMode.Multiplayer, g);
+                            Stats.clearStats();
                         }
                         else if (menuSelected == 3)
                         {
@@ -267,10 +271,6 @@ namespace Pong
             //Draw pause menu text
             s.DrawString(Assets.MenuFont, pausedContinue, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(pausedContinue).X / 2, s.GraphicsDevice.Viewport.Height / 3 + 2 * Assets.MenuFont.MeasureString(pausedContinue).Y), Color.Green);
             s.DrawString(Assets.MenuFont, toMenu, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(toMenu).X / 2, s.GraphicsDevice.Viewport.Height / 3 + 4 * Assets.MenuFont.MeasureString(toMenu).Y), Color.Green);
-        }
-        public void drawUI(SpriteBatch s)
-        {
-
         }
         public void startGame(GameMode gameMode, GraphicsDevice g)
         {

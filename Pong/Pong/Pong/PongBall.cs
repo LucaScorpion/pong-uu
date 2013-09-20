@@ -99,6 +99,9 @@ namespace Pong
         {
             if (rect.Intersects(player.CollisionRectangle))
             {
+                //Add a bounce in the stats
+                Stats.addBounce();
+
                 collisionRect.X -= (int)speed.X;
                 if (!collisionRect.Intersects(player.CollisionRectangle))
                 {
@@ -118,6 +121,9 @@ namespace Pong
                     //Curve effect when playerdirection is opposite of ball direction
                     if ((speed.Y >= 0 && player.MoveDirection == 1) || (speed.Y <= 0 && player.MoveDirection == -1))
                     {
+                        //Add a curveball in the stats
+                        Stats.addCurveball();
+                        
                         curveDirection = player.MoveDirection;
                     }
                     else
