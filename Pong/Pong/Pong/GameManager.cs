@@ -29,9 +29,10 @@ namespace Pong
         String paused = "Game paused";
         String pausedContinue = "Continue";
         String toMenu = "Back to main menu";
+        public static bool playing = false;
         float playerDead = 0;
         int statsTextOffset = 10;
-        int statsNumbersOffset = 160;
+        int statsNumbersOffset = 200;
         String stats = "Stats:";
         String bounces = "Total bounces:";
         String curveballs = "Total curveballs:";
@@ -100,15 +101,21 @@ namespace Pong
                     {
                         gameState = GameState.GameOver;
                         playerDead = 0;
+                        playing = false;
                         //Kill ball
                         pongBall = null;
                     }
-                    if (playerManager.playerTwo.Lives <= 0)
+                    else if (playerManager.playerTwo.Lives <= 0)
                     {
                         gameState = GameState.GameOver;
                         playerDead = 1;
+                        playing = false;
                         //Kill ball
                         pongBall = null;
+                    }
+                    else
+                    {
+                        playing = true;
                     }
                     break;
                 case GameState.Paused:

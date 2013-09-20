@@ -19,6 +19,7 @@ namespace Pong
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         GameManager gameManager = new GameManager();
+        Stats stats = new Stats();
 
         public Game1()
         {
@@ -81,6 +82,9 @@ namespace Pong
         {
             //Update input devices
             InputState.update();
+            
+            //Update playtime for stats
+            stats.updateGameTime(gameTime.TotalGameTime.Seconds);
 
             gameManager.update(graphics.GraphicsDevice);
             //Close the game if exit is clicked in the main menu
