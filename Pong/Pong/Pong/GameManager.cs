@@ -29,6 +29,12 @@ namespace Pong
         String paused = "Game paused";
         String pausedContinue = "Continue";
         String toMenu = "Back to main menu";
+        float playerDead = 0;
+        int statsTextOffset = 10;
+        int statsNumbersOffset = 160;
+        String stats = "Stats:";
+        String bounces = "Total bounces:";
+        String curveballs = "Total curveballs:";
         #endregion
 
         #region Methods
@@ -90,9 +96,17 @@ namespace Pong
                         pongBall.pause();
                     }
                     //Game Over when a player is dead
-                    if (playerManager.playerTwo.Lives <= 0 || playerManager.playerOne.Lives <= 0)
+                    if (playerManager.playerOne.Lives <= 0)
                     {
                         gameState = GameState.GameOver;
+                        playerDead = 0;
+                        //Kill ball
+                        pongBall = null;
+                    }
+                    if (playerManager.playerTwo.Lives <= 0)
+                    {
+                        gameState = GameState.GameOver;
+                        playerDead = 1;
                         //Kill ball
                         pongBall = null;
                     }
@@ -200,7 +214,7 @@ namespace Pong
                     //Game over logic
                     if (gameState == GameState.GameOver)
                     {
-
+                        drawStats(s, playerDead);
                     }
                     else
                     {
@@ -271,6 +285,16 @@ namespace Pong
             //Draw pause menu text
             s.DrawString(Assets.MenuFont, pausedContinue, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(pausedContinue).X / 2, s.GraphicsDevice.Viewport.Height / 3 + 2 * Assets.MenuFont.MeasureString(pausedContinue).Y), Color.Green);
             s.DrawString(Assets.MenuFont, toMenu, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(toMenu).X / 2, s.GraphicsDevice.Viewport.Height / 3 + 4 * Assets.MenuFont.MeasureString(toMenu).Y), Color.Green);
+        }
+        public void drawStats(SpriteBatch s, float d)
+        {
+            //Draw text
+            s.DrawString(Assets.MenuFont, stats, new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsTextOffset, Assets.MenuFont.MeasureString(stats).Y), Assets.Colors.FlashyGreen);
+            s.DrawString(Assets.MenuFont, bounces, new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsTextOffset, Assets.MenuFont.MeasureString(bounces).Y * 3), Assets.Colors.FlashyGreen);
+            s.DrawString(Assets.MenuFont, curveballs, new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsTextOffset, Assets.MenuFont.MeasureString(curveballs).Y * 5), Assets.Colors.FlashyGreen);
+            //Draw stats
+            s.DrawString(Assets.MenuFont, Stats.totalBounces.ToString(), new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsNumbersOffset, Assets.MenuFont.MeasureString(bounces).Y * 3), Assets.Colors.FlashyGreen);
+            s.DrawString(Assets.MenuFont, Stats.totalCurveballs.ToString(), new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsNumbersOffset, Assets.MenuFont.MeasureString(curveballs).Y * 5), Assets.Colors.FlashyGreen);
         }
         public void startGame(GameMode gameMode, GraphicsDevice g)
         {

@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Pong
 {
-    public static class Stats
+    public class Stats
     {
         #region Fields
-        static int totalBounces = 0;
-        static int totalCurveballs = 0;
+        public static int totalBounces = 0;
+        public static int totalCurveballs = 0;
         #endregion
 
         #region Methods
@@ -38,9 +38,6 @@ namespace Pong
         #endregion
 
         #region Properties
-        //Use these to display the stats
-        public int TotalBounces { get { return totalBounces; } }
-        public int TotalCurveballs { get { return totalCurveballs; } }
         #endregion
 
     }
