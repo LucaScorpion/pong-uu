@@ -304,7 +304,7 @@ namespace Pong
             //Draw stats
             s.DrawString(Assets.MenuFont, Stats.totalBounces.ToString(), new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsNumbersOffset, Assets.MenuFont.MeasureString(bounces).Y * 3), Assets.Colors.FlashyGreen);
             s.DrawString(Assets.MenuFont, Stats.totalCurveballs.ToString(), new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsNumbersOffset, Assets.MenuFont.MeasureString(curveballs).Y * 5), Assets.Colors.FlashyGreen);
-            s.DrawString(Assets.MenuFont, Stats.totalPlaytime.ToString() + " seconds", new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsNumbersOffset, Assets.MenuFont.MeasureString(playtime).Y * 7), Assets.Colors.FlashyGreen);
+            s.DrawString(Assets.MenuFont, Stats.totalPlaytimeMinutes.ToString() + " m. " + Stats.totalPlaytimeSeconds.ToString() + " s.", new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsNumbersOffset, Assets.MenuFont.MeasureString(playtime).Y * 7), Assets.Colors.FlashyGreen);
         }
         public void startGame(GameMode gameMode, GraphicsDevice g)
         {

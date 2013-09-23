@@ -11,7 +11,9 @@ namespace Pong
         public static int totalBounces = 0;
         public static int totalCurveballs = 0;
         static int startPlaytime;
-        public static int totalPlaytime = 0;
+        public static int totalPlaytimeSeconds = 0;
+        public static int totalPlaytimeMinutes = 0;
+        static int previoust;
 
         #endregion
 
@@ -32,13 +34,26 @@ namespace Pong
         {
             if (GameManager.playing == false)
             {
-                //Calculate the starting playtime
+                //Set the starting playtime
                 startPlaytime = t;
+                previoust = t - 1;
             }
             else if (GameManager.playing == true)
             {
-                //Calculate the total playtime
-                totalPlaytime = t - startPlaytime;
+                //If a second has passed
+                if (t != previoust)
+                {
+                    //Add a second
+                    totalPlaytimeSeconds++;
+                    //If 60 seconds have passed
+                    if (totalPlaytimeSeconds == 60)
+                    {
+                        //Add a minute, reset seconds
+                        totalPlaytimeMinutes++;
+                        totalPlaytimeSeconds = 0;
+                    }
+                    previoust = t;
+                }
             }
         }
 
@@ -47,7 +62,8 @@ namespace Pong
         {
             totalBounces = 0;
             totalCurveballs = 0;
-            totalPlaytime = 0;
+            totalPlaytimeSeconds = 0;
+            totalPlaytimeMinutes = 0;
         }
 
         #endregion
