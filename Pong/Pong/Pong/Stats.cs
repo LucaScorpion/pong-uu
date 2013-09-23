@@ -11,7 +11,6 @@ namespace Pong
         public static int totalBounces = 0;
         public static int totalCurveballs = 0;
         static int startPlaytime;
-        static int currentPlaytime;
         public static int totalPlaytime = 0;
 
         #endregion
@@ -34,15 +33,13 @@ namespace Pong
             if (GameManager.playing == false)
             {
                 //Calculate the starting playtime
-                startPlaytime = currentPlaytime;
+                startPlaytime = t;
             }
             else if (GameManager.playing == true)
             {
                 //Calculate the total playtime
-                totalPlaytime = currentPlaytime - startPlaytime;
+                totalPlaytime = t - startPlaytime;
             }
-            Console.Clear();
-            Console.WriteLine(totalPlaytime);
         }
 
         //Clear all stats, should be called at the start of every game
@@ -50,6 +47,7 @@ namespace Pong
         {
             totalBounces = 0;
             totalCurveballs = 0;
+            totalPlaytime = 0;
         }
 
         #endregion
