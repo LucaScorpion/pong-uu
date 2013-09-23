@@ -50,14 +50,17 @@ namespace Pong
             }
             else if(ControlMode.Ai == controlMode)
             {
-                //Move towards the ball
-                if (pongBall.Position.Y > rect.Center.Y)
+                //Move towards the ball if the ball is moving towards the AI
+                if ((pongBall.Position.X > rect.Center.X && pongBall.Speed.X < 0) || (pongBall.Position.X < rect.Center.X && pongBall.Speed.X > 0))
                 {
-                    rect.Y += movementSpeed;
-                }
-                if (pongBall.Position.Y < rect.Center.Y)
-                {
-                    rect.Y -= movementSpeed;
+                    if (pongBall.Position.Y > rect.Center.Y)
+                    {
+                        rect.Y += movementSpeed/lives;
+                    }
+                    if (pongBall.Position.Y < rect.Center.Y)
+                    {
+                        rect.Y -= movementSpeed/lives;
+                    }
                 }
             }
             //Restrict movement to viewport

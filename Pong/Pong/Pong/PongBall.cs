@@ -167,6 +167,7 @@ namespace Pong
         #region Properties
         public Vector2 Position { get { return new Vector2(rect.Center.X, rect.Center.Y); } }
         public bool IsPaused { get { return paused; } set { paused = value; } }
+        public Vector2 Speed { get { return speed; } }
         #endregion
 
     }
