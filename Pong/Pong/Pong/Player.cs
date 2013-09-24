@@ -53,13 +53,17 @@ namespace Pong
                 //Move towards the ball if the ball is moving towards the AI
                 if ((pongBall.Position.X > rect.Center.X && pongBall.Speed.X < 0) || (pongBall.Position.X < rect.Center.X && pongBall.Speed.X > 0))
                 {
-                    if (pongBall.Position.Y > rect.Center.Y)
+                    //Move towards the ball if the ball is on the AI's half of the screen
+                    if (pongBall.Position.X < g.Viewport.Width / 2)
                     {
-                        rect.Y += movementSpeed/lives;
-                    }
-                    if (pongBall.Position.Y < rect.Center.Y)
-                    {
-                        rect.Y -= movementSpeed/lives;
+                        if (pongBall.Position.Y > rect.Center.Y)
+                        {
+                            rect.Y += movementSpeed - lives;
+                        }
+                        if (pongBall.Position.Y < rect.Center.Y)
+                        {
+                            rect.Y -= movementSpeed - lives;
+                        }
                     }
                 }
             }
