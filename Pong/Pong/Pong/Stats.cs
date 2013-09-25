@@ -22,7 +22,7 @@ namespace Pong
         static String bounces = "Total bounces:";
         static String curveballs = "Total curveballs:";
         static String playtime = "Total playtime:";
-        static String toMenu = "Back to main menu";
+        static String toMenu = "Back to start screen";
         
         static int statsTextOffset = 10;
         static int statsNumbersOffset = 250;
@@ -75,7 +75,7 @@ namespace Pong
                 s.Draw(Assets.DummyTexture, new Rectangle((int)(s.GraphicsDevice.Viewport.Width * (d / 2)), (int)(Assets.MenuFont.MeasureString(toMenu).Y * 15 - rectYOffset), s.GraphicsDevice.Viewport.Width / 2, (int)(Assets.MenuFont.MeasureString(toMenu).Y)), Assets.Colors.ExplodingGreen);
                 if (InputState.leftClick())
                 {
-                    GameManager.CurrentGameState = GameState.Menu;
+                    GameManager.CurrentGameState = GameState.StartScreen;
                 }
             }
             //Draw text
