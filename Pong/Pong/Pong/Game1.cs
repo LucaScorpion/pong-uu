@@ -102,8 +102,12 @@ namespace Pong
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            //Clear Screen
             GraphicsDevice.Clear(Assets.Colors.DimmGreen);
+
+            //Draw game
             gameManager.draw(spriteBatch);
+
             base.Draw(gameTime);
         }
     }

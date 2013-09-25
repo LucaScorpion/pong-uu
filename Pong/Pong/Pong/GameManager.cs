@@ -14,7 +14,7 @@ namespace Pong
     public class GameManager
     {
         #region Fields
-        GameState gameState = GameState.StartScreen;
+        static GameState gameState = GameState.StartScreen;
         Keys startButton = Keys.Space;
         Keys pauseButton = Keys.Escape;
         PlayerManager playerManager = new PlayerManager();
@@ -32,12 +32,6 @@ namespace Pong
         String toMenu = "Back to main menu";
         public static bool playing = false;
         float playerDead = 0;
-        int statsTextOffset = 10;
-        int statsNumbersOffset = 250;
-        String stats = "Stats:";
-        String bounces = "Total bounces:";
-        String curveballs = "Total curveballs:";
-        String playtime = "Total playtime:";
         #endregion
 
         #region Methods
@@ -154,15 +148,7 @@ namespace Pong
                     }
                     break;
                 case GameState.GameOver:
-                    //Highlight toMenu text when hovering over it
-                    if (InputState.currentMouse.Y > Assets.MenuFont.MeasureString(toMenu).Y * 11 - rectYOffset && InputState.currentMouse.Y < Assets.MenuFont.MeasureString(toMenu).Y * 12 - rectYOffset && InputState.currentMouse.X > g.Viewport.Width * (playerDead / 2) && InputState.currentMouse.X < g.Viewport.Width * (playerDead / 2 + 0.5))
-                    {
-                        statsSelected = 1;
-                    }
-                    else
-                    {
-                        statsSelected = 0;
-                    }
+                    
                     //Check for clicking
                     if (InputState.leftClick() && statsSelected == 1)
                     {
@@ -236,7 +222,7 @@ namespace Pong
                     //Game over logic
                     if (gameState == GameState.GameOver)
                     {
-                        drawStats(s, playerDead);
+                        Stats.Draw(s, playerDead);
                     }
                     else
                     {
@@ -308,24 +294,6 @@ namespace Pong
             s.DrawString(Assets.MenuFont, pausedContinue, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(pausedContinue).X / 2, s.GraphicsDevice.Viewport.Height / 3 + 2 * Assets.MenuFont.MeasureString(pausedContinue).Y), Color.Green);
             s.DrawString(Assets.MenuFont, toMenu, new Vector2(s.GraphicsDevice.Viewport.Width / 2 - Assets.MenuFont.MeasureString(toMenu).X / 2, s.GraphicsDevice.Viewport.Height / 3 + 4 * Assets.MenuFont.MeasureString(toMenu).Y), Color.Green);
         }
-        public void drawStats(SpriteBatch s, float d)
-        {
-            //Highlight toMenu text
-            if (statsSelected == 1)
-            {
-                s.Draw(Assets.DummyTexture, new Rectangle((int)(s.GraphicsDevice.Viewport.Width * (d / 2)), (int)(Assets.MenuFont.MeasureString(toMenu).Y * 11 - rectYOffset), s.GraphicsDevice.Viewport.Width / 2, (int)(Assets.MenuFont.MeasureString(toMenu).Y)), Assets.Colors.ExplodingGreen);
-            }
-            //Draw text
-            s.DrawString(Assets.MenuFont, stats, new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsTextOffset, Assets.MenuFont.MeasureString(stats).Y), Assets.Colors.FlashyGreen);
-            s.DrawString(Assets.MenuFont, bounces, new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsTextOffset, Assets.MenuFont.MeasureString(bounces).Y * 3), Assets.Colors.FlashyGreen);
-            s.DrawString(Assets.MenuFont, curveballs, new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsTextOffset, Assets.MenuFont.MeasureString(curveballs).Y * 5), Assets.Colors.FlashyGreen);
-            s.DrawString(Assets.MenuFont, playtime, new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsTextOffset, Assets.MenuFont.MeasureString(playtime).Y * 7), Assets.Colors.FlashyGreen);
-            s.DrawString(Assets.MenuFont, toMenu, new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsTextOffset, Assets.MenuFont.MeasureString(toMenu).Y * 11), Color.Green);
-            //Draw stats
-            s.DrawString(Assets.MenuFont, Stats.totalBounces.ToString(), new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsNumbersOffset, Assets.MenuFont.MeasureString(bounces).Y * 3), Assets.Colors.FlashyGreen);
-            s.DrawString(Assets.MenuFont, Stats.totalCurveballs.ToString(), new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsNumbersOffset, Assets.MenuFont.MeasureString(curveballs).Y * 5), Assets.Colors.FlashyGreen);
-            s.DrawString(Assets.MenuFont, Stats.totalPlaytimeMinutes.ToString() + " m. " + Stats.totalPlaytimeSeconds.ToString() + " s.", new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsNumbersOffset, Assets.MenuFont.MeasureString(playtime).Y * 7), Assets.Colors.FlashyGreen);
-        }
         public void startGame(GameMode gameMode, GraphicsDevice g)
         {
             playerManager = new PlayerManager();
@@ -378,6 +346,7 @@ namespace Pong
         #endregion
 
         #region Properties
+        public static GameState CurrentGameState { get { return gameState; } set { gameState = value; } }
         #endregion
 
 

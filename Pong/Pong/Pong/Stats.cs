@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Pong
 {
@@ -14,7 +16,16 @@ namespace Pong
         public static int totalPlaytimeSeconds = 0;
         public static int totalPlaytimeMinutes = 0;
         static int previoust;
+        static int rectYOffset = 3;
 
+        static String stats = "Stats:";
+        static String bounces = "Total bounces:";
+        static String curveballs = "Total curveballs:";
+        static String playtime = "Total playtime:";
+        static String toMenu = "Back to main menu";
+        
+        static int statsTextOffset = 10;
+        static int statsNumbersOffset = 250;
         #endregion
 
         #region Methods
@@ -55,6 +66,29 @@ namespace Pong
                     previoust = t;
                 }
             }
+        }
+        public static void Draw(SpriteBatch s, float d)
+        {
+            //Highlight toMenu text when hovering over it
+            if (InputState.currentMouse.Y > Assets.MenuFont.MeasureString(toMenu).Y * 11 - rectYOffset && InputState.currentMouse.Y < Assets.MenuFont.MeasureString(toMenu).Y * 12 - rectYOffset && InputState.currentMouse.X > s.GraphicsDevice.Viewport.Width * (d / 2) && InputState.currentMouse.X < s.GraphicsDevice.Viewport.Width * (d / 2 + 0.5))
+            {
+                s.Draw(Assets.DummyTexture, new Rectangle((int)(s.GraphicsDevice.Viewport.Width * (d / 2)), (int)(Assets.MenuFont.MeasureString(toMenu).Y * 11 - rectYOffset), s.GraphicsDevice.Viewport.Width / 2, (int)(Assets.MenuFont.MeasureString(toMenu).Y)), Assets.Colors.ExplodingGreen);
+                if (InputState.leftClick())
+                {
+                    GameManager.CurrentGameState = GameState.Menu;
+                }
+            }
+            //Draw text
+            s.DrawString(Assets.MenuFont, stats, new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsTextOffset, Assets.MenuFont.MeasureString(stats).Y), Assets.Colors.FlashyGreen);
+            s.DrawString(Assets.MenuFont, bounces, new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsTextOffset, Assets.MenuFont.MeasureString(bounces).Y * 3), Assets.Colors.FlashyGreen);
+            s.DrawString(Assets.MenuFont, curveballs, new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsTextOffset, Assets.MenuFont.MeasureString(curveballs).Y * 5), Assets.Colors.FlashyGreen);
+            s.DrawString(Assets.MenuFont, playtime, new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsTextOffset, Assets.MenuFont.MeasureString(playtime).Y * 7), Assets.Colors.FlashyGreen);
+            s.DrawString(Assets.MenuFont, toMenu, new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsTextOffset, Assets.MenuFont.MeasureString(toMenu).Y * 11), Color.Green);
+            //Draw stats
+            s.DrawString(Assets.MenuFont, Stats.totalBounces.ToString(), new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsNumbersOffset, Assets.MenuFont.MeasureString(bounces).Y * 3), Assets.Colors.FlashyGreen);
+            s.DrawString(Assets.MenuFont, Stats.totalCurveballs.ToString(), new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsNumbersOffset, Assets.MenuFont.MeasureString(curveballs).Y * 5), Assets.Colors.FlashyGreen);
+            s.DrawString(Assets.MenuFont, Stats.totalPlaytimeMinutes.ToString() + " m. " + Stats.totalPlaytimeSeconds.ToString() + " s.", new Vector2(s.GraphicsDevice.Viewport.Width * (d / 2) + statsNumbersOffset, Assets.MenuFont.MeasureString(playtime).Y * 7), Assets.Colors.FlashyGreen);
+
         }
 
         //Clear all stats, should be called at the start of every game
