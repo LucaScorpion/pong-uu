@@ -25,11 +25,11 @@ namespace Pong
         #endregion
 
         #region Methods
-        public void setColor(Color c)
+        public void SetColor(Color c)
         {
             this.color = c;
         }
-        public void create(GraphicsDevice g)
+        public void Create(GraphicsDevice g)
         {
             //Put the ball in the middle of the screen
             rect.X = (g.Viewport.Width / 2) - (rect.Width / 2);
@@ -41,7 +41,7 @@ namespace Pong
             paused = true;
             curveDirection = 0;
         }
-        public void update(GraphicsDevice g)
+        public void Update(GraphicsDevice g)
         {
             if (!paused)
             {
@@ -95,7 +95,7 @@ namespace Pong
                 }
             }
         }
-        public void collideToPlayer(Player player)
+        public void CollideToPlayer(Player player)
         {
             if (rect.Intersects(player.CollisionRectangle))
             {
@@ -142,7 +142,7 @@ namespace Pong
                 }
             }
         }
-        public void draw(SpriteBatch s)
+        public void Draw(SpriteBatch s)
         {
             s.Draw(texture, rect, color);
             if (paused)
@@ -152,7 +152,7 @@ namespace Pong
                 s.DrawString(Assets.MenuFont, msg, new Vector2(rect.X + rect.Width / 2 - Assets.MenuFont.MeasureString(msg).X / 2, rect.Y + rect.Height * 2), Assets.Colors.LuminantGreen);
             }
         }
-        public void pause()
+        public void Pause()
         {
             paused = true;
         }

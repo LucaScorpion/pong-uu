@@ -56,18 +56,18 @@ namespace Pong
                     //Update playermanager
                     playerManager.update(g, pongBall);
                     //Update the ball
-                    pongBall.update(g);
+                    pongBall.Update(g);
 
                     //Collide players to ball
-                    pongBall.collideToPlayer(playerManager.playerOne);
-                    pongBall.collideToPlayer(playerManager.playerTwo);
+                    pongBall.CollideToPlayer(playerManager.playerOne);
+                    pongBall.CollideToPlayer(playerManager.playerTwo);
 
                     //Kill ball if outside screen (point scored)
                     if (pongBall.Position.X > g.Viewport.Width)
                     {
                         //Player 2 loses life
                         playerManager.playerTwo.Lives--;
-                        pongBall.create(g);
+                        pongBall.Create(g);
                         Assets.Audio.Death.Play();
 
                         //Reset players
@@ -77,7 +77,7 @@ namespace Pong
                     {
                         //Player 1 loses life
                         playerManager.playerOne.Lives--;
-                        pongBall.create(g);
+                        pongBall.Create(g);
                         Assets.Audio.Death.Play();
                         //Reset players
                         playerManager.reset(g);
@@ -90,7 +90,7 @@ namespace Pong
                     if (InputState.isKeyPressed(pauseButton))
                     {
                         gameState = GameState.Paused;
-                        pongBall.pause();
+                        pongBall.Pause();
                     }
                     //Game Over when a player is dead
                     if (playerManager.playerOne.Lives <= 0)
@@ -227,7 +227,7 @@ namespace Pong
                     else
                     {
                         //Draw ball if game is not over
-                        pongBall.draw(s);
+                        pongBall.Draw(s);
                         //Draw particles if not game over
                         ParticleManager.draw(s);
                     }
@@ -323,7 +323,7 @@ namespace Pong
 
             //Spawn a ball
             pongBall = new PongBall();
-            pongBall.create(g);
+            pongBall.Create(g);
 
             //Change state to start game
             gameState = GameState.Playing;
