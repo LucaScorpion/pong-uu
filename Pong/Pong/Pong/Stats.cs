@@ -17,7 +17,6 @@ namespace Pong
         public static int totalPlaytimeMinutes = 0;
         static int previoust;
         static int rectYOffset = 3;
-
         static String stats = "Stats:";
         static String bounces = "Total bounces:";
         static String curveballs = "Total curveballs:";
