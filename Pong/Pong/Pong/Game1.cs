@@ -52,6 +52,7 @@ namespace Pong
 
             //Load Fonts
             Assets.MenuFont = Content.Load<SpriteFont>("menuFont");
+            Assets.BigMenuFont = Content.Load<SpriteFont>("bigMenuFont");
 
             //Load Textures
             Assets.PongBall = Content.Load<Texture2D>("PongBall");

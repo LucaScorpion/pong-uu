@@ -16,6 +16,7 @@ namespace Pong
         #region Fields
         public static Texture2D DummyTexture;
         public static SpriteFont MenuFont;
+        public static SpriteFont BigMenuFont;
         public static Texture2D PongBall;
         public static Texture2D Player;
         public static Texture2D Midline;
