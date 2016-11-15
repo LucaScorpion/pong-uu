@@ -6,7 +6,7 @@
 https://github.com/LucaScorpion/pong-uu
 
 == Authors ==
-Thomas Biesaart (https://github.com/thomasbiesaart)
+Thomas Biesaart (https://github.com/ChappIO)
 Luca Scalzotto (https://github.com/LucaScorpion)
 
 == About ==
